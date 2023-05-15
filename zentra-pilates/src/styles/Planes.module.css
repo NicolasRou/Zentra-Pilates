@@ -1,0 +1,54 @@
+.title h2 {
+  text-align: center;
+  color: var(--verde-base);
+  font-size: var(--size-h2);
+  margin-bottom: 50px;
+}
+.table {
+  width: 80%;
+  margin: auto;
+  border-spacing: 0;
+}
+.encabezados th {
+  background-color: var(--verde-base);
+}
+.encabezados h3 {
+    font-size: 1.8rem;
+    color: #ffff;
+}
+.encabezados p {
+    color: #ffff;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding-bottom: 2%;
+}
+.precios td {
+  text-align: center;
+  padding: 2%;
+  font-size: 3.5rem;
+  color: var(--verde-base);
+  font-weight: 700;
+  border: solid 1px;
+}
+.precios td::first-letter {
+    font-size: 1.5rem;
+}
+.td {
+    border: solid 1px var(--verde-base);
+}
+.td p {
+    padding-left: 6%;
+    color: var(--verde-base);
+    font-size: 1.2rem;
+}
+.td p:first-child {
+    color: var(--verde-base);
+    font-weight: 600;
+}
+.link {
+    margin-bottom: 35%;
+    padding: 2%;
+    border-radius: 25px;
+    background-color: var(--verde-base);
+    color: #ffff;
+}
