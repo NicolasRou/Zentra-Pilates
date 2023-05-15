@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+}
+.container__text {
+    display: flex;
+    flex-direction: column;
+    margin: 12% 8%  8% 8%;
+}
+.container__text h2 {
+    text-align: center;
+    font-size: 2.8rem;
+    color: var(--verde-base);
+}
+.container__text p {
+    font-size: 1.3rem;
+}
+.container__img {
+    margin: 9% 0 4% 0%;
+}

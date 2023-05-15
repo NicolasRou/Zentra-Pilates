@@ -1,0 +1,99 @@
+.header { 
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background-color: #ffff;
+}
+.header__top {
+  background-color: #688056;
+  
+}
+.block__info {
+  display: flex;
+  gap: 20px;
+  width: 90%;
+  max-width: 1080px;
+  margin: 0 10%;
+}
+.block__info div {
+  display: flex;
+  gap: 3px;
+  font-size: small;
+  color: white;
+}
+.block__info div p {
+  margin: 0;
+  padding: 4px;
+}
+
+.block__img {
+  padding: 1px;
+}
+/* Estilos de menu nav */
+.block__menu {
+  display: flex;
+  width: 70%;
+  margin: 0.8% auto 0 auto;
+}
+.menu__logo {
+  width: 190px;
+  height: 55px;
+  position: relative;
+  margin-right: 10%;
+}
+.menu__list {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.link__arrow {
+  display: flex;
+  gap: 5px;
+  padding-bottom: 20px;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  transition: display 1s;
+}
+.dropdownItems {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 6px;
+  padding-top: 10px;
+}
+.dropdownItems li {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdownItems li:hover {
+  background-color: #ddd;
+}
+.dropdown:hover .dropdownItems {
+  display: block;
+}
+.contact__icon {
+  display: flex;
+  position: fixed;
+  padding:2px;
+  width: 160px;
+  height: 55px;
+  bottom: 30px;
+  right: 50px;
+  background-color: #ddd;
+  border-radius: 100px;
+  z-index: 100;
+}
+.contact__icon p {
+    font-weight: 600;
+    color: #686060;
+}
