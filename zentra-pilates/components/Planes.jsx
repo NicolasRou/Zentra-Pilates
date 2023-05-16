@@ -40,9 +40,11 @@ export default function Planes() {
               <p>Pilates TRX</p>
               <p>Stretching</p>
               <p>Yoga</p>
-              <Link href="" className={styles.link}>
-                INSCRIBIRME
-              </Link>
+              <div className={styles.container__link}>
+                <Link href="" className={styles.link}>
+                  INSCRIBIRME
+                </Link>
+              </div>
             </td>
             <td className={styles.td}>
               <p>Podés elegir todas las actividades</p>
@@ -52,9 +54,11 @@ export default function Planes() {
               <p>Pilates TRX</p>
               <p>Stretching</p>
               <p>Yoga</p>
-              <Link href="" className={styles.link}>
-                INSCRIBIRME
-              </Link>
+              <div className={styles.container__link}>
+                <Link href="" className={styles.link}>
+                  INSCRIBIRME
+                </Link>
+              </div>
             </td>
             <td className={styles.td}>
               <p>Podés elegir todas las actividades</p>
@@ -64,13 +68,22 @@ export default function Planes() {
               <p>Pilates TRX</p>
               <p>Stretching</p>
               <p>Yoga</p>
-              <Link href="" className={styles.link}>
-                INSCRIBIRME
-              </Link>
+              <div className={styles.container__link}>
+                <Link href="" className={styles.link}>
+                  INSCRIBIRME
+                </Link>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
+      <div className={styles.block__link}>
+        <div>
+          <Link href="" className={styles.link_clases}>
+            MÁS CLASES
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
