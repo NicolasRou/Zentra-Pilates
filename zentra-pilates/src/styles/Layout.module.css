@@ -34,7 +34,7 @@
 .block__menu {
   display: flex;
   width: 70%;
-  margin: 0.8% auto 0 auto;
+  margin: 0.8% auto 0.8% auto;
 }
 .menu__logo {
   width: 190px;
@@ -47,12 +47,11 @@
   gap: 30px;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-items: center;
 }
-
 .link__arrow {
   display: flex;
   gap: 5px;
-  padding-bottom: 20px;
 }
 .dropdown {
   position: relative;

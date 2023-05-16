@@ -8,6 +8,9 @@
 .block h3 {
   text-align: center;
 }
+.title {
+  margin: 60px;
+}
 .block h2 {
   color: var(--verde-base);
   font-size: var(--size-h2);

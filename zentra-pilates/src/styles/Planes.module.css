@@ -2,7 +2,7 @@
   text-align: center;
   color: var(--verde-base);
   font-size: var(--size-h2);
-  margin-bottom: 50px;
+  margin: 100px 0;
 }
 .table {
   width: 80%;
@@ -13,14 +13,14 @@
   background-color: var(--verde-base);
 }
 .encabezados h3 {
-    font-size: 1.8rem;
-    color: #ffff;
+  font-size: 1.8rem;
+  color: #ffff;
 }
 .encabezados p {
-    color: #ffff;
-    font-size: 1.2rem;
-    font-weight: 400;
-    padding-bottom: 2%;
+  color: #ffff;
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding-bottom: 2%;
 }
 .precios td {
   text-align: center;
@@ -31,24 +31,50 @@
   border: solid 1px;
 }
 .precios td::first-letter {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 .td {
-    border: solid 1px var(--verde-base);
+  border: solid 1px var(--verde-base);
+  padding-top: 50px;
 }
 .td p {
-    padding-left: 6%;
-    color: var(--verde-base);
-    font-size: 1.2rem;
+  padding-left: 6%;
+  color: var(--verde-base);
+  font-size: 1.2rem;
 }
 .td p:first-child {
-    color: var(--verde-base);
-    font-weight: 600;
+  color: var(--verde-base);
+  font-weight: 600;
+}
+.container__link {
+  text-align: center;
+  margin: 80px 0;
 }
 .link {
-    margin-bottom: 35%;
-    padding: 2%;
-    border-radius: 25px;
-    background-color: var(--verde-base);
-    color: #ffff;
+  margin-bottom: 35%;
+  padding: 1% 5%;
+  border-radius: 25px;
+  background-color: var(--verde-base);
+  color: #ffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  
+}
+.block__link {
+  width: 80%;
+  text-align: right;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+.block__link div {
+  width: 150px;
+  text-align: center;
+  margin-top: 30px;
+  background-color: #2c3e45;
+  padding: 0.7%;
+  color: #ffff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  
 }

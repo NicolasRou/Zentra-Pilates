@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import Concepto from "../../components/Concepto";
 import Actividades from "../../components/Actividades"
 import Planes from "../../components/Planes"
+import Clases from "../../components/Clases"
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <Concepto/> 
         <Actividades/>
         <Planes/>
+        <Clases/>
       </Layout>
     </>
   );
