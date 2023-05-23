@@ -4,7 +4,7 @@ import styles from "@/styles/Concepto.module.css";
 
 export default function Concepto() {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="nosotras">
       <div className={styles.container__text}>
         <h2>Concepto Zentra</h2>
         <p>
@@ -22,7 +22,7 @@ export default function Concepto() {
       <div className={styles.container__img}>
         <Image
           src={concepto}
-          alt="Personas haciendo pilates"
+          alt="Alumnos haciendo pilates"
           width={930}
           
         />

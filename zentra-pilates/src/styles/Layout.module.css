@@ -9,12 +9,15 @@
   background-color: #688056;
   
 }
-.block__info {
+.block__info {  
   display: flex;
   gap: 20px;
-  width: 90%;
+  width: 80%;
   max-width: 1080px;
-  margin: 0 10%;
+  margin: 0 15%;
+}
+.info__icon {
+  display: flex;
 }
 .block__info div {
   display: flex;
@@ -95,4 +98,22 @@
 .contact__icon p {
     font-weight: 600;
     color: #686060;
+}
+.footer {
+  background-color: #4a5b5f;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80px;
+  margin-bottom: 20px;
+}
+.text {
+
+  display: flex;
+  gap: 30px;
+  color: #ffff;
+}
+.links {
+  display: flex;
+  gap: 20px;
 }

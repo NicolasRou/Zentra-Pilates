@@ -1,3 +1,6 @@
+.planes {
+  margin: 10% 0;
+}
 .title h2 {
   text-align: center;
   color: var(--verde-base);
@@ -63,7 +66,7 @@
 .block__link {
   width: 80%;
   text-align: right;
-  margin: auto;
+  margin: auto auto 150px auto;
   display: flex;
   justify-content: flex-end;
 }

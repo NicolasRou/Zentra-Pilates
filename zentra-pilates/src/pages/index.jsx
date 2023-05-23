@@ -4,6 +4,9 @@ import Concepto from "../../components/Concepto";
 import Actividades from "../../components/Actividades"
 import Planes from "../../components/Planes"
 import Clases from "../../components/Clases"
+import Pago from "../../components/Metodos"
+import Estudio from "../../components/Estudio"
+import Reserva from "../../components/Reserva"
 
 export default function Home() {
   return (
@@ -21,6 +24,8 @@ export default function Home() {
         <Actividades/>
         <Planes/>
         <Clases/>
+        <Estudio/>
+        <Reserva/>
       </Layout>
     </>
   );

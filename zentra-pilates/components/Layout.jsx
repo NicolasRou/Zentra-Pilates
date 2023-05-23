@@ -4,7 +4,7 @@ import phone from "../src/assets/icons/phone.svg";
 import instagram from "../src/assets/icons/instagram.svg";
 import facebook from "../src/assets/icons/facebook.svg";
 import mail from "../src/assets/icons/mail.svg";
-import whatsapp from "../src/assets/icons/whatsapp.svg"
+import whatsapp from "../src/assets/icons/whatsapp.svg";
 import logo from "../src/assets/Logo.png";
 import arrow from "../src/assets/menu/arrow.svg";
 import Head from "next/head";
@@ -14,7 +14,7 @@ export default function Layout({ children, title, content }) {
   return (
     <div>
       <Head>
-        <title> {title ? `${title} ` : "Zentra Pilates "}</title>
+        <title>{title}</title>
         <meta name="description" content={content} />
         <meta
           property="og:title"
@@ -44,42 +44,53 @@ export default function Layout({ children, title, content }) {
               <p>098 353 971</p>
             </div>
             <div className={styles.info__icon}>
-              <Image
-                src={mail}
-                alt="Ícono mail"
-                width={20}
-                height={20}
-                className={styles.block__img}
-              />
-              <p>pilateszentra@gmail.com</p>
+              <Link
+                href="mailto:pilateszentra@gmail.com"
+                className={styles.info__icon}
+              >
+                <Image
+                  src={mail}
+                  alt="Ícono mail"
+                  width={20}
+                  height={20}
+                  className={styles.block__img}
+                />
+                <p>pilateszentra@gmail.com</p>
+              </Link>
             </div>
             <div className={styles.info__icon2}>
-              <Image
-                src={facebook}
-                alt="Ícono facebook"
-                width={20}
-                height={20}
-                className={styles.block__img}
-              />
-              <Image
-                src={instagram}
-                alt="Ícono instagram"
-                width={20}
-                height={20}
-                className={styles.block__img}
-              />
+              <Link href="https://www.facebook.com/Zentra-Pilates-1731269160292932/">
+                <Image
+                  src={facebook}
+                  alt="Ícono facebook"
+                  width={20}
+                  height={20}
+                  className={styles.block__img}
+                />
+              </Link>
+              <Link href="https://www.instagram.com/zentrapilates/?hl=es">
+                <Image
+                  src={instagram}
+                  alt="Ícono instagram"
+                  width={20}
+                  height={20}
+                  className={styles.block__img}
+                />
+              </Link>
             </div>
           </div>
         </div>
         <div className={styles.container}>
           <div className={styles.block__menu}>
             <div className={styles.menu__logo}>
-              <Image
-                src={logo}
-                alt="Logo Zentra Pilates"
-                fill
-                sizes="(max-width: 175px) 100vw"
-              />
+              <Link href="/">
+                <Image
+                  src={logo}
+                  alt="Logo Zentra Pilates"
+                  fill
+                  sizes="(max-width: 175px) 100vw"
+                />
+              </Link>
             </div>
             <nav className={styles.menu__nav}>
               <ul className={styles.menu__list}>
@@ -87,13 +98,17 @@ export default function Layout({ children, title, content }) {
                   <Link href="/">INICIO</Link>
                 </li>
                 <li>
-                  <Link href="">NOSOTRAS</Link>
+                  <Link href="/#nosotras" scroll={false}>
+                    NOSOTRAS
+                  </Link>
                 </li>
                 <li>
-                  <Link href="">ESTUDIO</Link>
+                  <Link href="/#estudio" scroll={false}>
+                    ESTUDIO
+                  </Link>
                 </li>
                 <li className={styles.dropdown}>
-                  <Link href="" className={styles.link__arrow}>
+                  <Link href="" className={styles.link__arrow} scroll={false}>
                     ACTIVIDADES
                     <Image
                       src={arrow}
@@ -105,35 +120,68 @@ export default function Layout({ children, title, content }) {
                   </Link>
                   <ul className={styles.dropdownItems}>
                     <li>
-                      <Link href="">Grupales</Link>
+                      <Link href="/#actividades" scroll={false}>
+                        Grupales
+                      </Link>
                     </li>
                     <li>
-                      <Link href="">Zentra One</Link>
+                      <Link href="/#clases" scroll={false}>
+                        Zentra One
+                      </Link>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <Link href="">HORARIOS</Link>
+                  <Link href={'horarios'}> HORARIOS </Link>
                 </li>
                 <li>
-                  <Link href="">PLANES</Link>
+                  <Link href={'planes'}>PLANES</Link>
                 </li>
                 <li>
-                  <Link href="">PAGOS</Link>
+                  <Link href={'pagos'}>PAGOS</Link>
                 </li>
                 <li>
-                  <Link href="">CONTACTA</Link>
+                  <Link href="/#contacta" scroll={false}>
+                    CONTACTA
+                  </Link>
                 </li>
               </ul>
             </nav>
           </div>
         </div>
         <div className={styles.contact__icon}>
-          <Image src={whatsapp} width={52} height={52} alt="ícono whatsapp" className={styles.icon__whatsapp}/>
+          <Image
+            src={whatsapp}
+            width={52}
+            height={52}
+            alt="ícono whatsapp"
+            className={styles.icon__whatsapp}
+          />
           <p>Contactá!</p>
         </div>
       </header>
       <main>{children}</main>
+      <footer>
+        <div className={styles.footer}>
+          <div className={styles.text}>
+            <p>Diseñado por goaestudio.com</p>
+            <p>Desarrollado por Nicolás Rouiller</p>
+          </div>
+          <div className={styles.links}>
+            <Link href="">
+              <Image
+                src={facebook}
+                width={40}
+                height="auto"
+                alt="icono facebook"
+              />
+            </Link>
+            <Link href="">
+              <Image src={instagram} width={40} alt="icono instagram" />
+            </Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

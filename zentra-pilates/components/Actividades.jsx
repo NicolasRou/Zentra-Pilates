@@ -9,7 +9,7 @@ import yoga from "../src/assets/card/yoga.png";
 
 export default function Actividades() {
   return (
-    <div className={styles.block}>
+    <div className={styles.block} id="actividades">
       <div className={styles.title}>
         <h2>Actividades en Zentra Estudio</h2>
       </div>

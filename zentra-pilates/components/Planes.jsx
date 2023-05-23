@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Planes() {
   return (
-    <div>
+    <div className={styles.planes}>
       <div className={styles.title}>
         <h2>
           ¡Tenemos planes adaptados a tus necesidades! <br /> Valor de la

@@ -1,0 +1,50 @@
+.bg__img {
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: auto;
+    filter: brightness(70%);
+}
+
+.portada {
+    color: #ffff;
+    height: 1300px;
+    position: relative;
+    z-index: 100;
+    text-align: center;
+    padding-top: 10%;
+}
+.portada h3 {
+    font-size: 1.9rem;
+}
+.portada p {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.container__table {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+.container__table div {
+    margin-top: 2%;
+    border: solid 3px #ffff;
+    padding: 5%;
+}
+.table__item {
+    color: #ffff;
+}
+.text {
+    text-align: center;
+    font-size: x-large;
+    
+    border: 2px solid;
+    width: 70%;
+    margin: 4% auto 7% auto;
+}
+.text h3 {
+    margin: 4% 0;
+}
+.text p {
+    margin-bottom: 6%;
+}

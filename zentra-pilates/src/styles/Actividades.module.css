@@ -2,7 +2,7 @@
 
 .block {
   background-color: var(--fondo-actividades);
-  padding: 3%;
+  padding: 5% 3%;
 }
 .block h2,
 .block h3 {
