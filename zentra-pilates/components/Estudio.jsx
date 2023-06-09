@@ -6,7 +6,7 @@ export default function Estudio() {
   return (
     <div className={styles.container} id="estudio">
       <div>
-        <Image src={estudio} width={1000} alt="Profesora de Pilates"/>
+        <Image src={estudio} width={1000} alt="Profesora de Pilates" className={styles.img}/>
       </div>
       <div className={styles.text}>
         <h4>Nuestro estudio:</h4>

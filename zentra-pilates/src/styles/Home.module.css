@@ -22,3 +22,10 @@
   font-size: 1.7rem;
   font-weight: 400;
 }
+/* ----------MEDIA QUERIES----------- */
+@media screen and (max-width: 767px) {
+  .container__portada {
+    max-width: 100%;
+    margin: 0;
+  }
+}

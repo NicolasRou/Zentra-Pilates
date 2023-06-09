@@ -2,6 +2,7 @@ import styles from "@/styles/Reserva.module.css";
 import miniLogo from "../src/assets/miniLogo.png";
 import Image from "next/image";
 
+
 export default function Reserva() {
   return (
     <div className={styles.container} id="contacta">

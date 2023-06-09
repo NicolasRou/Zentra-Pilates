@@ -40,3 +40,18 @@
     font-size: 1.1rem;
     font-weight: 600;
   }
+
+  /* ------MEDIA QUERIES--------- */
+
+@media screen and (max-width: 767px) {
+    .container__clases {
+        width: auto;
+    }
+    .clases {
+        flex-wrap: wrap;
+    }
+    .img {
+        width: 100%;
+        height: auto;
+    }
+}

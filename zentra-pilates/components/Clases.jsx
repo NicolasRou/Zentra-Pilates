@@ -17,7 +17,7 @@ export default function Clases() {
             promo y reservá tu lugar ahora!
           </p>
           <div className={styles.image}>
-            <Image src={clases1} width={450} alt="clases por zoom" />
+            <Image src={clases1} width={450} alt="clases por zoom" className={styles.img}/>
             <div className={styles.link__float}>
               <Link href="" className={styles.link}>
                 INSCRIBIRME
@@ -33,7 +33,7 @@ export default function Clases() {
             desponibilidad de agenda.
           </p>
           <div className={styles.image}>
-            <Image src={clases2} width={450} alt="clase pilates suelta" />
+            <Image src={clases2} width={450} alt="clase pilates suelta" className={styles.img}/>
             <div className={styles.link__float}>
               <Link href="" className={styles.link}>
                 RESERVAR CLASE
@@ -49,7 +49,7 @@ export default function Clases() {
             individual y exclusiva.
           </p>
           <div className={styles.image}>
-            <Image src={clases3} width={450} alt="pilates individual" />
+            <Image src={clases3} width={450} alt="pilates individual" className={styles.img}/>
             <div className={styles.link__float}>
               <Link href="" className={styles.link}>
                 LISTA DE ESPERA

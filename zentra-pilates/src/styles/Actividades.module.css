@@ -36,3 +36,16 @@
     font-size: 1.3rem;
     line-height: 30px;
 }
+/* ------MEDIA QUERIES--------- */
+
+@media screen and (max-width: 767px) {
+  .block {
+    max-width: 100%;
+  }
+  .container__cards {
+    flex-wrap: wrap;
+  }
+  .container {
+    width: auto;
+  }
+}

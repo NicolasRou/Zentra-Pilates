@@ -24,7 +24,8 @@ export default function Concepto() {
           src={concepto}
           alt="Alumnos haciendo pilates"
           width={930}
-          
+          sizes="100vw"
+          className={styles.img}          
         />
       </div>
     </div>
