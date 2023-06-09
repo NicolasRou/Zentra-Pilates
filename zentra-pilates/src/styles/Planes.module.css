@@ -81,3 +81,10 @@
   font-size: 1.1rem;
   
 }
+/* ------MEDIA QUERIES--------- */
+
+@media screen and (max-width: 767px) {
+  .precios td {
+    font-size: 1.8rem;
+  }
+}

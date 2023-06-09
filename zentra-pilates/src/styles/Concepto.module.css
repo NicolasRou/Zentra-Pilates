@@ -17,3 +17,18 @@
 .container__img {
     margin: 9% 0 4% 0%;
 }
+/* -------MEDIA QUERIES-------- */
+@media screen and (max-width: 767px) {
+    .container {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+    .container__img {
+        margin: 0;
+        max-width: 100%;
+    }
+    .img {
+        max-width: 100%;
+        height: auto;
+    }
+}

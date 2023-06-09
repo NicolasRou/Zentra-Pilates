@@ -12,3 +12,18 @@
 .text p {
     font-size:x-large;
 }
+
+/* ------MEDIA QUERIES--------- */
+
+@media screen and (max-width: 767px) {
+    .container {
+        flex-wrap: wrap;
+    }
+    .img {
+        width: 100%;
+        height: auto;
+    }
+    .text {
+        width: 100%;
+    }
+}

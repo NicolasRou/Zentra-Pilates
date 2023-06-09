@@ -25,3 +25,10 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* --------MEDIA QUERIES-------- */
+@media screen and (max-width: 767px) {
+  /* html, body {
+    height: 100vh;
+  } */
+}

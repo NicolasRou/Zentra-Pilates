@@ -117,3 +117,24 @@
   display: flex;
   gap: 20px;
 }
+
+/* -------------MEDIA QUERIES------------ */
+
+@media screen and (max-width: 767px) {
+  .contact__icon {
+    right: 110px;
+  }
+  .header {
+    max-width: 100vw;
+  }
+  .header__top {
+    max-width: 100%;
+  }
+  .block__info {
+    gap: 10px;
+  }
+  .info__icon2 {
+    visibility: hidden;
+    width: 0;
+  }
+}

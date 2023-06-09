@@ -132,13 +132,13 @@ export default function Layout({ children, title, content }) {
                   </ul>
                 </li>
                 <li>
-                  <Link href={'horarios'}> HORARIOS </Link>
+                  <Link href={"horarios"}> HORARIOS </Link>
                 </li>
                 <li>
-                  <Link href={'planes'}>PLANES</Link>
+                  <Link href={"planes"}>PLANES</Link>
                 </li>
                 <li>
-                  <Link href={'pagos'}>PAGOS</Link>
+                  <Link href={"pagos"}>PAGOS</Link>
                 </li>
                 <li>
                   <Link href="/#contacta" scroll={false}>
