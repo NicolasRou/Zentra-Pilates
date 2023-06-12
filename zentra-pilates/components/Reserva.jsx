@@ -45,7 +45,7 @@ export default function Reserva() {
         </form>
       </div>
       <div className={styles.logo}>
-        <Image src={miniLogo} width={150} alt="Logo Zentra Pilates"/>
+        <Image src={miniLogo} width={150} alt="Logo Zentra Pilates" className={styles.logoSmall}/>
       </div>
     </div>
   );

@@ -6,11 +6,20 @@ import facebook from "../src/assets/icons/facebook.svg";
 import mail from "../src/assets/icons/mail.svg";
 import whatsapp from "../src/assets/icons/whatsapp.svg";
 import logo from "../src/assets/Logo.png";
-import arrow from "../src/assets/menu/arrow.svg";
+// import arrow from "../src/assets/menu/arrow.svg";
 import Head from "next/head";
 import styles from "@/styles/Layout.module.css";
+import Navbar from "./Navbar";
+import MenuButton from "./MenuButton";
+import { useState } from "react";
 
 export default function Layout({ children, title, content }) {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   return (
     <div>
       <Head>
@@ -87,66 +96,15 @@ export default function Layout({ children, title, content }) {
                 <Image
                   src={logo}
                   alt="Logo Zentra Pilates"
-                  fill
-                  sizes="(max-width: 175px) 100vw"
+                  // fill
+                  width={150}
+                  // sizes="(max-width: 175px) 100vw"
+                  className={styles.logo}
                 />
               </Link>
             </div>
-            <nav className={styles.menu__nav}>
-              <ul className={styles.menu__list}>
-                <li>
-                  <Link href="/">INICIO</Link>
-                </li>
-                <li>
-                  <Link href="/#nosotras" scroll={false}>
-                    NOSOTRAS
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/#estudio" scroll={false}>
-                    ESTUDIO
-                  </Link>
-                </li>
-                <li className={styles.dropdown}>
-                  <Link href="" className={styles.link__arrow} scroll={false}>
-                    ACTIVIDADES
-                    <Image
-                      src={arrow}
-                      alt="flecha menú"
-                      width={20}
-                      height={20}
-                      className={styles.arrow}
-                    />
-                  </Link>
-                  <ul className={styles.dropdownItems}>
-                    <li>
-                      <Link href="/#actividades" scroll={false}>
-                        Grupales
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/#clases" scroll={false}>
-                        Zentra One
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <Link href={"horarios"}> HORARIOS </Link>
-                </li>
-                <li>
-                  <Link href={"planes"}>PLANES</Link>
-                </li>
-                <li>
-                  <Link href={"pagos"}>PAGOS</Link>
-                </li>
-                <li>
-                  <Link href="/#contacta" scroll={false}>
-                    CONTACTA
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+            <Navbar open={open} />
+            <MenuButton open={open} handleClick={handleClick} />
           </div>
         </div>
         <div className={styles.contact__icon}>

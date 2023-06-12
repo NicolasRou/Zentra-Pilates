@@ -27,5 +27,18 @@
   .container__portada {
     max-width: 100%;
     margin: 0;
+    background-size: 290%;
+    top: 0;
+    height: 110vh;
+  }
+  .container__portada h1 {
+    left: 0;
+    right: 20px;
+    font-size: 1.2rem;
+  }
+  .container__portada h2 {
+    font-size: 1.1rem;
+    right: 20px;
+    top: 40%;
   }
 }
