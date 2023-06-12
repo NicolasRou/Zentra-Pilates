@@ -1,0 +1,11 @@
+.button {
+  border: none;
+  background-color: #ffff;
+
+  color: var(--verde-base);
+}
+@media only screen and (min-width: 624px) {
+  .button {
+    display: none;
+  }
+}

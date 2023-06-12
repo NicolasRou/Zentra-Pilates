@@ -29,11 +29,11 @@
   width: 100%;
 }
 .container__text h3 {
-  font-size: 2.1rem;
+  font-size: var(--size-h3Sub);
   color: var(--verde-base);
 }
 .container__text p {
-    font-size: 1.3rem;
+    font-size: var(--size-p);
     line-height: 30px;
 }
 /* ------MEDIA QUERIES--------- */

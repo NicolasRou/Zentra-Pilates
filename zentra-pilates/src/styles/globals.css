@@ -2,6 +2,8 @@
   --verde-base: #688056;
   --fondo-actividades: #efeecf;
   --size-h2: 2.8rem;
+  --size-h3Sub: 2.3rem;
+  --size-p: 1.3rem;
 }
 * {
   box-sizing: border-box;
@@ -28,7 +30,9 @@ a {
 
 /* --------MEDIA QUERIES-------- */
 @media screen and (max-width: 767px) {
-  /* html, body {
-    height: 100vh;
-  } */
+  :root {
+    --size-h2: 1.9rem;
+    --size-h3Sub: 1.7rem;
+    --size-p: 0.9rem;
+  }
 }

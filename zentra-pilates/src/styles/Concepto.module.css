@@ -8,11 +8,11 @@
 }
 .container__text h2 {
     text-align: center;
-    font-size: 2.8rem;
+    font-size: var(--size-h2);
     color: var(--verde-base);
 }
 .container__text p {
-    font-size: 1.3rem;
+    font-size: var(--size-p);
 }
 .container__img {
     margin: 9% 0 4% 0%;
