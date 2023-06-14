@@ -47,3 +47,23 @@
   background-color: #edf1f2;
   height: 430px;
 }
+
+@media screen and (max-width: 767px) {
+  .container__titles {
+    gap: 1px;
+    margin: 0;
+    width: 97.5%;
+  }
+  .container__pago {
+    margin: auto auto 10% auto;
+  }
+  .container__metodos span {
+    height: 37px
+  }
+  .container__metodos h3,
+  .container__fecha h3,
+  .container__confirma h3 {
+    font-size: 0.9rem;
+    white-space: normal;
+  }
+}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar({ open }) {
+  
   return (
     <>
       <nav open={open} className={open ? "menu__navShow" : "menu__navHide"}>
@@ -68,9 +69,9 @@ export default function Navbar({ open }) {
           position: absolute;
           margin-top: 80px;
           width: 60%;
-          height: 50vh;
           opacity: 1;
           animation: fade-in 1s ;
+          border-radius: 10px
         }
         .menu__navHide {
           display: none;
