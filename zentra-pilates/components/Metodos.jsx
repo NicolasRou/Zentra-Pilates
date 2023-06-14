@@ -113,6 +113,21 @@ export default function Pago() {
             .displayNone {
               display: none;
             }
+            @media screen and (max-width: 767px) {
+              
+              .container__descriptionMetodos h3 {
+                
+                font-size: 1.2rem;
+                
+              }
+              .container__descriptionMetodos h4 {
+                
+                font-size: 1.1rem;
+              }
+              .container__descriptionMetodos p {
+                font-size: 1rem;
+              }
+            }
           `}
         </style>
       </div>
