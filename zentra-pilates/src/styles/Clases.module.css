@@ -1,65 +1,119 @@
 .container__clases {
-    background-color: #efefef;
-    margin-top: 100px;
-    padding-bottom: 8%;
+  background-color: #efefef;
+  margin-top: 100px;
+  padding-bottom: 8%;
 }
 .clases {
-    display: flex;
-    width: 85%;
-    margin: 0 10%;
-    gap: 50px;
-    background-color: #efefef;
+  display: flex;
+  width: 85%;
+  margin: 0 10%;
+  gap: 50px;
+  background-color: #efefef;
 }
-
+.clases__card {
+   
+    flex-wrap: wrap;
+}
 .clases__card h3 {
-    color: var(--verde-base);
-    font-size: var(--size-h3Sub);
-    text-align: center;
-    margin-top: 80px;
+  color: var(--verde-base);
+  font-size: var(--size-h3Sub);
+  text-align: center;
+  margin-top: 80px;
 }
 .clases__card p {
-    font-size: var(--size-p);
-    margin-bottom: 10%;
+  font-size: var(--size-p);
+  margin-bottom: 10%;
 }
 .image {
-    position: relative;
-    
+  position: relative;
 }
 .link__float {
-    position: absolute;
-    width: 50%;
-    top: 90%;
-    left: 28%;
+  position: absolute;
+  width: 50%;
+  top: 90%;
+  left: 28%;
+  
 }
 .link {
-    margin-bottom: 35%;
-    padding: 3% 10%;
-    border-radius: 25px;
-    background-color: var(--verde-base);
-    color: #ffff;
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
+  margin-bottom: 35%;
+  padding: 3% 10%;
+  border-radius: 25px;
+  background-color: var(--verde-base);
+  color: #ffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: 0.8s;
+}
+.link:hover {
+  color: var(--verde-base);
+  background-color: #ffff;
+  transition: 0.8s;
+}
 
-  /* ------MEDIA QUERIES--------- */
+/* ------MEDIA QUERIES--------- */
 
 @media screen and (max-width: 767px) {
-    .container__clases {
-        width: auto;
-        margin: auto;
-        padding-bottom: 15%;
-    }
+  .container__clases {
+    width: auto;
+    margin: auto;
+    padding-bottom: 15%;
+  }
+  .clases {
+    flex-wrap: wrap;
+    width: auto;
+    gap: 0;
+    margin: 0% 10% 10% 10%;
+  }
+  .img {
+    width: 100%;
+    height: auto;
+  }
+  .link {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .container__clases {
+    width: auto;
+    margin: auto;
+    padding-bottom: 15%;
+  }
+  .clases {
+    flex-wrap: wrap;
+    width: auto;
+    gap: 0;
+    margin: 0% 10% 10% 10%;
+  }
+  .img {
+    width: 100%;
+    height: auto;
+  }
+  .link {
+    font-size: 0.8rem;
+  }
+  .link__float {
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1650px) {
     .clases {
         flex-wrap: wrap;
-        width: auto;
-        gap: 0;
-        margin: 0% 10% 10% 10%;
     }
-    .img {
-        width: 100%;
-        height: auto;
+    .clases__card {
+        min-width: 500px;
+    }
+    .clases__card p {
+        margin: auto 10% 10% 10%;
+    }
+    .image {
+        text-align: center;
     }
     .link {
-        font-size: 0.8rem;
+        padding: 2% 8%;
+    }
+    .link__float {
+        left: 25%;
     }
 }

@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar({ open }) {
-  
   return (
     <>
       <nav open={open} className={open ? "menu__navShow" : "menu__navHide"}>
@@ -63,15 +62,18 @@ export default function Navbar({ open }) {
           </li>
         </ul>
       </nav>
+
       <style jsx>{`
         .menu__navShow {
           background: #ffff;
           position: absolute;
-          margin-top: 80px;
-          width: 60%;
+          margin: 80px auto;
+          width: 80%;
+          left: 10%;
+          rigth: 10%;
           opacity: 1;
-          animation: fade-in 1s ;
-          border-radius: 10px
+          animation: fade-in 1s;
+          border-radius: 10px;
         }
         .menu__navHide {
           display: none;
@@ -81,7 +83,7 @@ export default function Navbar({ open }) {
           width: 100%;
           heigth: 0;
           opacity: 1;
-          animation: fade-out 0.2s ;
+          animation: fade-out 0.2s;
         }
         @keyframes fade-in {
           from {
@@ -91,7 +93,7 @@ export default function Navbar({ open }) {
             opacity: 1;
           }
         }
-        
+
         @keyframes fade-out {
           from {
             opacity: 1;
@@ -100,12 +102,12 @@ export default function Navbar({ open }) {
             opacity: 0;
           }
         }
-        @media only screen and (min-width: 624px) {
+        @media only screen and (min-width: 1022px) {
           .menu__navHide {
             flex-direction: row;
             position: initial;
             height: auto;
-            justify-content: center;
+            justify-content: space-between;
             display: block;
           }
         }

@@ -8,27 +8,26 @@ export default function Pago() {
       setActiveTab(numberTab);
     }
   };
-
   return (
     <div className={styles.container__pago}>
       <div className={styles.container__titles}>
         <div className={styles.container__metodos}>
-          <span></span>
+          <span className={activeTab == "1" ? "spanActive" : "span"}></span>
           <button
-            className={styles.button__metodos}
+            className={activeTab == "1" ? "active" : "button"}
             onClick={() => selectTab(1)}
           >
             <h3>Métodos de pago</h3>
           </button>
         </div>
         <div className={styles.container__fecha}>
-          <button className={styles.button__fecha} onClick={() => selectTab(2)}>
+          <button  className={activeTab == "2" ? "active" : "button"} onClick={() => selectTab(2)}>
             <h3>Fecha de Pago</h3>
           </button>
         </div>
         <div className={styles.container__confirma}>
           <button
-            className={styles.button__confirma}
+             className={activeTab == "3" ? "active" : "button"}
             onClick={() => selectTab(3)}
           >
             <h3>Confirma Pago</h3>
@@ -86,51 +85,73 @@ export default function Pago() {
             a pilateszentra@gmail.com
           </p>
         </div>
-        <style jsx>
-          {`
-            .show {
-              display: block;
-            }
-            .container__descriptionMetodos {
-              padding: 4%;
-            }
+      </div>
+      <style jsx>
+        {`
+          .active {
+            padding: 2% 15%;
+            background-color: #2c3e45;
+            width: 100%;
+            transform: skew(30deg) translate(0, -10px);
+            border-style: none;
+            transition: 0.8s;
+            transform: translateY (10px);
+          }
+          .spanActive {
+            background-color: #2c3e45;
+            transition: 0.8s;
+            transform: skew(30deg) translate(0, -10px);
+          }
+          .span {
+            background-color: var(--verde-base);
+            transition: 0.8s;
+          }
+          .button {
+            padding: 2% 15%;
+            background-color: var(--verde-base);
+            width: 100%;
+            transform: skew(30deg);
+            border-style: none;
+            transition: 0.8s;
+          }
+          .show {
+            display: block;
+          }
+          .container__descriptionMetodos {
+            padding: 4%;
+          }
+          .container__descriptionMetodos h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #2c3e45;
+          }
+          .container__descriptionMetodos p,
+          .container__descriptionMetodos h4 {
+            color: #2c3e45;
+          }
+          .container__descriptionMetodos h4 {
+            font-weight: bold;
+            font-size: 1.5rem;
+          }
+          .container__descriptionMetodos p {
+            font-size: 1.3rem;
+          }
+          .displayNone {
+            display: none;
+          }
+          @media screen and (max-width: 767px) {
             .container__descriptionMetodos h3 {
-              margin: 0;
-              font-size: 1.5rem;
-              color: #2c3e45;
-            }
-            .container__descriptionMetodos p,
-            .container__descriptionMetodos h4 {
-              color: #2c3e45;
+              font-size: 1.2rem;
             }
             .container__descriptionMetodos h4 {
-              font-weight: bold;
-              font-size: 1.5rem;
+              font-size: 1.1rem;
             }
             .container__descriptionMetodos p {
-              font-size: 1.3rem;
+              font-size: 1rem;
             }
-            .displayNone {
-              display: none;
-            }
-            @media screen and (max-width: 767px) {
-              
-              .container__descriptionMetodos h3 {
-                
-                font-size: 1.2rem;
-                
-              }
-              .container__descriptionMetodos h4 {
-                
-                font-size: 1.1rem;
-              }
-              .container__descriptionMetodos p {
-                font-size: 1rem;
-              }
-            }
-          `}
-        </style>
-      </div>
+          }
+        `}
+      </style>
     </div>
   );
 }

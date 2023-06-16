@@ -3,7 +3,7 @@ import Card from "./Card";
 import mat from "../src/assets/card/mat.png";
 import embarazadas from "../src/assets/card/embarazadas.png";
 import funcional from "../src/assets/card/funcional.png";
-import trx from "../src/assets/card/trx.png";
+import trx from "../src/assets/card/trx.jpg";
 import stretching from "../src/assets/card/stretching.png";
 import yoga from "../src/assets/card/yoga.png";
 

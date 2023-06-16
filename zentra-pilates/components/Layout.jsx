@@ -6,7 +6,6 @@ import facebook from "../src/assets/icons/facebook.svg";
 import mail from "../src/assets/icons/mail.svg";
 import whatsapp from "../src/assets/icons/whatsapp.svg";
 import logo from "../src/assets/Logo.png";
-// import arrow from "../src/assets/menu/arrow.svg";
 import Head from "next/head";
 import styles from "@/styles/Layout.module.css";
 import Navbar from "./Navbar";
@@ -96,9 +95,7 @@ export default function Layout({ children, title, content }) {
                 <Image
                   src={logo}
                   alt="Logo Zentra Pilates"
-                  // fill
                   width={150}
-                  // sizes="(max-width: 175px) 100vw"
                   className={styles.logo}
                 />
               </Link>
@@ -107,16 +104,18 @@ export default function Layout({ children, title, content }) {
             <MenuButton open={open} handleClick={handleClick} />
           </div>
         </div>
-        <div className={styles.contact__icon}>
-          <Image
-            src={whatsapp}
-            width={52}
-            height={52}
-            alt="ícono whatsapp"
-            className={styles.icon__whatsapp}
-          />
-          <p>Contactá!</p>
-        </div>
+        <Link href="https://wa.me/59898353971">
+          <div className={styles.contact__icon}>
+            <Image
+              src={whatsapp}
+              width={48}
+              height={48}
+              alt="ícono whatsapp"
+              className={styles.icon__whatsapp}
+            />
+            <p>Contactá!</p>
+          </div>
+        </Link>
       </header>
       <main>{children}</main>
       <footer>
@@ -126,7 +125,7 @@ export default function Layout({ children, title, content }) {
             <p>Desarrollado por Nicolás Rouiller</p>
           </div>
           <div className={styles.links}>
-            <Link href="">
+            <Link href="https://www.facebook.com/Zentra-Pilates-1731269160292932/">
               <Image
                 src={facebook}
                 width={40}
@@ -134,7 +133,7 @@ export default function Layout({ children, title, content }) {
                 alt="icono facebook"
               />
             </Link>
-            <Link href="">
+            <Link href="https://www.instagram.com/zentrapilates/?hl=es">
               <Image src={instagram} width={40} alt="icono instagram" />
             </Link>
           </div>

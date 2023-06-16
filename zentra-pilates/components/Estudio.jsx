@@ -9,7 +9,7 @@ export default function Estudio() {
         <Image src={estudio} width={1000} alt="Profesora de Pilates" className={styles.img}/>
       </div>
       <div className={styles.text}>
-        <h4>Nuestro estudio:</h4>
+        <h4>Nuestro estudio</h4>
         <p>
           Estudio completamente equipado y con cupos adaptados a normas vigentes
           de salud e higiene.

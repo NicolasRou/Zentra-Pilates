@@ -61,7 +61,12 @@
   color: #ffff;
   font-size: 1.1rem;
   font-weight: 600;
-  
+  transition: 0.8s;
+}
+.link:hover {
+  color: var(--verde-base);
+  background-color: #ffff;
+  transition: 0.8s;
 }
 .block__link {
   width: 80%;
@@ -70,6 +75,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
 .block__link div {
   width: 150px;
   text-align: center;
@@ -79,7 +85,13 @@
   color: #ffff;
   font-weight: 600;
   font-size: 1.1rem;
-  
+  transition: 1s;
+}
+.block__link div:hover {
+  color: #2c3e45;
+  background-color: #ffff;
+  transition: 1s;
+  transform: scale(1.1);
 }
 /* ------MEDIA QUERIES--------- */
 
