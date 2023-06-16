@@ -45,6 +45,13 @@
   font-weight: 600;
   font-size: 1.5rem;
   border: none;
+  transition: 0.8s;
+}
+.container__form button:hover {
+  color: var(--verde-base);
+  background-color: #ffff;
+  transition: 0.8s;
+  transform: scale(1.1);
 }
 .logo {
   text-align: center;
@@ -62,5 +69,11 @@
   .logoSmall {
     width: 100px;
     height: 100px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 85%;
   }
 }

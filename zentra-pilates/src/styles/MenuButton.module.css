@@ -4,7 +4,7 @@
 
   color: var(--verde-base);
 }
-@media only screen and (min-width: 624px) {
+@media only screen and (min-width: 1022px) {
   .button {
     display: none;
   }

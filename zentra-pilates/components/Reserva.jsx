@@ -11,7 +11,7 @@ export default function Reserva() {
       </div>
       <div>
         <form
-          action=""
+          action="mailto:pilateszentra@gmail.com"
           method="post"
           encType="text/plain"
           className={styles.container__form}
@@ -29,6 +29,7 @@ export default function Reserva() {
               name="email"
               id="email"
               placeholder="Dirección de correo electrónico"
+              required
             />
           </div>
           <textarea

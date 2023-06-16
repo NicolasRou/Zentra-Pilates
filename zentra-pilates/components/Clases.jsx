@@ -19,7 +19,7 @@ export default function Clases() {
           <div className={styles.image}>
             <Image src={clases1} width={450} alt="clases por zoom" className={styles.img}/>
             <div className={styles.link__float}>
-              <Link href="" className={styles.link}>
+              <Link href="/#contacta" className={styles.link}>
                 INSCRIBIRME
               </Link>
             </div>
@@ -35,7 +35,7 @@ export default function Clases() {
           <div className={styles.image}>
             <Image src={clases2} width={450} alt="clase pilates suelta" className={styles.img}/>
             <div className={styles.link__float}>
-              <Link href="" className={styles.link}>
+              <Link href="/#contacta" className={styles.link}>
                 RESERVAR CLASE
               </Link>
             </div>
@@ -51,7 +51,7 @@ export default function Clases() {
           <div className={styles.image}>
             <Image src={clases3} width={450} alt="pilates individual" className={styles.img}/>
             <div className={styles.link__float}>
-              <Link href="" className={styles.link}>
+              <Link href="/#contacta" className={styles.link}>
                 LISTA DE ESPERA
               </Link>
             </div>
