@@ -10,7 +10,7 @@ import Reserva from "../../components/Reserva"
 export default function Home() {
   return (
     <>
-      <Layout title=" Inicio - Zentra Pilates">
+      <Layout title=" Inicio - Zentra Pilates" content="Conocé nuestros planes en Zentra. Estudio de Pilates, Yoga y stretching. En magallanes 1256, Cordón, Montevideo">
         <div className={styles.container__portada}>
           <h1>
             Estudio de pilates <br /> y stretching
