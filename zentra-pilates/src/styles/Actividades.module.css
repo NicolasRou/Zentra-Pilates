@@ -35,6 +35,7 @@
 .container__text p {
   font-size: var(--size-p);
   line-height: 30px;
+  text-align: center;
 }
 /* ------MEDIA QUERIES--------- */
 

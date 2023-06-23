@@ -132,6 +132,12 @@
   .contact__icon {
     right: 20px;
   }
+  .visible {
+    display: block;
+  }
+  .hidden {
+    display: none;
+  }
   .icon__whatsapp {
     width: 30px;
   }

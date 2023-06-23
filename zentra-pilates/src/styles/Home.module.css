@@ -25,21 +25,25 @@
 /* ----------MEDIA QUERIES----------- */
 @media screen and (max-width: 767px) {
   .container__portada {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.7)),
+      url(../assets/img/portada.png);
     max-width: 100%;
     margin: 0;
-    background-size: 290%;
+    background-size: 350%;
     top: 0;
-    height: 110vh;
+    height: 100vh;
   }
   .container__portada h1 {
     left: 0;
     right: 20px;
     font-size: 1.2rem;
+    top: 60%;
   }
   .container__portada h2 {
     font-size: 1.1rem;
     right: 20px;
-    top: 40%;
+    top: 70%;
+    color: rgb(255, 255, 255);
   }
 }
 
