@@ -83,7 +83,7 @@ export default function Navbar({ open }) {
           width: 100%;
           heigth: 0;
           opacity: 1;
-          animation: fade-out 0.2s;
+          
         }
         @keyframes fade-in {
           from {

@@ -27,9 +27,9 @@ export default function Planes() {
             </th>
           </tr>
           <tr className={styles.precios}>
-            <td>$1250</td>
-            <td>$1990</td>
-            <td>$2500</td>
+            <td>$1380</td>
+            <td>$2190</td>
+            <td>$2750</td>
           </tr>
           <tr>
             <td className={styles.td}>

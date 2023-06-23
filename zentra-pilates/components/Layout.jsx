@@ -10,7 +10,7 @@ import Head from "next/head";
 import styles from "@/styles/Layout.module.css";
 import Navbar from "./Navbar";
 import MenuButton from "./MenuButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Layout({ children, title, content }) {
   const [open, setOpen] = useState(false);
@@ -18,6 +18,19 @@ export default function Layout({ children, title, content }) {
   const handleClick = () => {
     setOpen(!open);
   };
+  const [visible, setVisible] = useState(false);
+
+  const toggleVisible = () => {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 300) {
+      setVisible(true);
+    } else if (scrolled <= 300) {
+      setVisible(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", toggleVisible);
+  }, []);
 
   return (
     <div>
@@ -105,7 +118,11 @@ export default function Layout({ children, title, content }) {
           </div>
         </div>
         <Link href="https://wa.me/59898353971">
-          <div className={styles.contact__icon}>
+          <div
+            className={`${styles.contact__icon} ${
+              visible ? "visible" : "hidden"
+            }`}
+          >
             <Image
               src={whatsapp}
               width={48}
@@ -139,6 +156,19 @@ export default function Layout({ children, title, content }) {
           </div>
         </div>
       </footer>
+      <style jsx>
+        {`
+        .visible {
+          visibility: visible;
+          opacity: 1;
+          transition: opacity .5s linear;
+        }
+        .hidden {
+          visibility: hidden;
+          opacity: 0;
+        }
+        `}
+      </style>
     </div>
   );
 }

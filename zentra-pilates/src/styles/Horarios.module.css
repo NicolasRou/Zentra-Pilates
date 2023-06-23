@@ -1,7 +1,7 @@
 .bg__img {
   position: absolute;
   z-index: 1;
-  width: 100vw;
+  width: 99vw;
   height: auto;
   filter: brightness(70%);
 }
@@ -13,6 +13,7 @@
   z-index: 100;
   text-align: center;
   padding-top: 10%;
+  max-width: 100vw;
 }
 .portada h3 {
   font-size: 1.9rem;
@@ -34,18 +35,55 @@
 .table__item {
   color: #ffff;
 }
+.subtitle h3 {
+  text-align: center;
+  font-size: var(--size-h2);
+  color: var(--verde-base);
+  margin: 6%;
+}
 .text {
   text-align: center;
-  font-size: x-large;
+  font-size: large;
   border: 2px solid;
-  width: 70%;
+  width: 95%;
   margin: 2% auto 7% auto;
+  overflow-x: scroll;
 }
 .text h3 {
   margin: 4% 0;
 }
 .text p {
   margin-bottom: 6%;
+}
+.table__container {
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 20px 20px;
+  margin: 0 auto;
+}
+.hora {
+  border-bottom: 1px solid;
+  font-weight: bold;
+}
+.hora ~ td {
+  /* padding: 5px; */
+  background-color: white;
+  border-bottom: 1px solid;
+}
+.hora ~ td p:hover {
+  color: var(--verde-base);
+}
+.días ~ th {
+  border: 1px solid;
+  padding: 10px;
+  background-color: var(--verde-base);
+  color: white;
+  font-weight: 500;
+}
+.icon {
+  border: none;
+  background-color: white;
+  color: var(--verde-base);
 }
 @media screen and (max-width: 767px) {
   .bg__img {
@@ -85,7 +123,7 @@
     margin-top: 0;
     border: none;
   }
-  .subtitle {
+  .p {
     text-align: center;
     color: #ffff;
     backdrop-filter: brightness(90%);
