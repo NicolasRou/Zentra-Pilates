@@ -7,7 +7,7 @@ export default function Planes() {
       <div className={styles.title}>
         <h2>
           ¡Tenemos planes adaptados a tus necesidades! <br /> Valor de la
-          inscripción por única vez $420
+          inscripción por única vez $450
         </h2>
       </div>
       <table className={styles.table}>
