@@ -12,7 +12,7 @@
 }
 .menu__list {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;

@@ -12,16 +12,6 @@ export default function Navbar({ open }) {
           <li>
             <Link href="/">INICIO</Link>
           </li>
-          <li>
-            <Link href="/#nosotras" scroll={false}>
-              NOSOTRAS
-            </Link>
-          </li>
-          <li>
-            <Link href="/#estudio" scroll={false}>
-              ESTUDIO
-            </Link>
-          </li>
           <li className={styles.dropdown}>
             <Link href="" className={styles.link__arrow} scroll={false}>
               ACTIVIDADES
@@ -60,6 +50,9 @@ export default function Navbar({ open }) {
               CONTACTA
             </Link>
           </li>
+          <li>
+            <Link href={"login"}> SOCIOS</Link>
+          </li>
         </ul>
       </nav>
 
@@ -83,7 +76,6 @@ export default function Navbar({ open }) {
           width: 100%;
           heigth: 0;
           opacity: 1;
-          
         }
         @keyframes fade-in {
           from {

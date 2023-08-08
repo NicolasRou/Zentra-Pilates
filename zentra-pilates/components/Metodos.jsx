@@ -21,13 +21,16 @@ export default function Pago() {
           </button>
         </div>
         <div className={styles.container__fecha}>
-          <button  className={activeTab == "2" ? "active" : "button"} onClick={() => selectTab(2)}>
+          <button
+            className={activeTab == "2" ? "active" : "button"}
+            onClick={() => selectTab(2)}
+          >
             <h3>Fecha de Pago</h3>
           </button>
         </div>
         <div className={styles.container__confirma}>
           <button
-             className={activeTab == "3" ? "active" : "button"}
+            className={activeTab == "3" ? "active" : "button"}
             onClick={() => selectTab(3)}
           >
             <h3>Confirma Pago</h3>

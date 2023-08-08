@@ -1,0 +1,15 @@
+const express = require("express");
+const sociosRoutes = require("./routes/socios");
+const horariosRoutes = require("./routes/horarios");
+const app = express();
+const cors = require("cors");
+const PORT = 5000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+app.use("/", sociosRoutes);
+app.use("/", horariosRoutes);
+
+app.listen(PORT, () => console.log("Escuchando en el puerto 5000"));
