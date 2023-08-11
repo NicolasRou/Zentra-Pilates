@@ -1,66 +1,68 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import DateSelector from "./DateSelector";
 
 export default function Historial({ onEdit, onDelete, showButtons }) {
-  const [mesesOptions, setMesesOptions] = useState([]);
-  const [yearsOptions, setYearsOptions] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(0);
-  const [selectedYear, setSelectedYear] = useState(0);
+  // const [mesesOptions, setMesesOptions] = useState([]);
+  // const [yearsOptions, setYearsOptions] = useState([]);
+  // const [selectedMonth, setSelectedMonth] = useState(0);
+  // const [selectedYear, setSelectedYear] = useState(0);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [horariosData, setHorariosData] = useState([]);
+  const [horarioFormated, setHorarioFormated] = useState([]);
+  const [horario, setHorario] = useState([]);
   const router = useRouter();
   const { id } = router.query;
 
-  useEffect(() => {
-    const meses = [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ];
-    const options = [];
-    options.push({ text: "Selecciona un mes", value: 0 });
+  // useEffect(() => {
+  //   const meses = [
+  //     "Enero",
+  //     "Febrero",
+  //     "Marzo",
+  //     "Abril",
+  //     "Mayo",
+  //     "Junio",
+  //     "Julio",
+  //     "Agosto",
+  //     "Septiembre",
+  //     "Octubre",
+  //     "Noviembre",
+  //     "Diciembre",
+  //   ];
+  //   const options = [];
+  //   options.push({ text: "Selecciona un mes", value: 0 });
 
-    for (let i = 0; i < meses.length; i++) {
-      const text = `${meses[i]} `;
-      options.push({ text, value: i + 1 });
-    }
-    setMesesOptions(options);
-  }, []);
+  //   for (let i = 0; i < meses.length; i++) {
+  //     const text = `${meses[i]} `;
+  //     options.push({ text, value: i + 1 });
+  //   }
+  //   setMesesOptions(options);
+  // }, []);
 
-  useEffect(() => {
-    const fechaActual = new Date();
-    const yearActual = fechaActual.getFullYear();
-    const anioInicio = 2021;
-    const options = [];
+  // useEffect(() => {
+  //   const fechaActual = new Date();
+  //   const yearActual = fechaActual.getFullYear();
+  //   const anioInicio = 2021;
+  //   const options = [];
 
-    for (let i = yearActual; i >= anioInicio; i--) {
-      const text = `${i}`;
-      options.push({ text, value: i });
-    }
+  //   for (let i = yearActual; i >= anioInicio; i--) {
+  //     const text = `${i}`;
+  //     options.push({ text, value: i });
+  //   }
 
-    options.unshift({ text: "Selecciona un año", value: 0 });
+  //   options.unshift({ text: "Selecciona un año", value: 0 });
 
-    setYearsOptions(options);
-  }, []);
+  //   setYearsOptions(options);
+  // }, []);
 
-  const handleMonthChange = (e) => {
-    setSelectedMonth(Number(e.target.value));
-  };
-  const handleYearChange = (e) => {
-    setSelectedYear(Number(e.target.value));
-  };
+  // const handleMonthChange = (e) => {
+  //   setSelectedMonth(Number(e.target.value));
+  // };
+  // const handleYearChange = (e) => {
+  //   setSelectedYear(Number(e.target.value));
+  // };
 
-  const getHorarios = async () => {
+  const getHorarios = async (startDate, endDate) => {
     try {
       const response = await fetch(`http://localhost:5000/horarios/${id}`, {
         method: "POST",
@@ -76,31 +78,33 @@ export default function Historial({ onEdit, onDelete, showButtons }) {
       });
 
       const responseJson = await response.json();
-      if (responseJson.data.length < 1) {
+      if (responseJson.data.original.length < 1) {
         console.log("No hay reservas en el historial con esta fecha");
       } else {
-        console.log(responseJson);
-        setHorariosData(responseJson.data);
-        console.log(horariosData);
+        console.log(responseJson.data.converted);
+        console.log(responseJson.data.original);
+        setHorarioFormated(responseJson.data.converted);
+        setHorario(responseJson.data.original);
+        console.log(startDate, endDate);
       }
     } catch (error) {
       console.log("error al obtener horarios");
     }
   };
 
-  const searchClases = () => {
-    if (selectedMonth !== 0 && selectedYear !== 0) {
-      const startDateStr = `${selectedYear}-${selectedMonth
-        .toString()
-        .padStart(2, "0")}-01`;
-      const endDateStr = new Date(selectedYear, selectedMonth, 0)
-        .toISOString()
-        .split("T")[0];
+  // const searchClases = () => {
+  //   if (selectedMonth !== 0 && selectedYear !== 0) {
+  //     const startDateStr = `${selectedYear}-${selectedMonth
+  //       .toString()
+  //       .padStart(2, "0")}-01`;
+  //     const endDateStr = new Date(selectedYear, selectedMonth, 0)
+  //       .toISOString()
+  //       .split("T")[0];
 
-      setStartDate(startDateStr);
-      setEndDate(endDateStr);
-    }
-  };
+  //     setStartDate(startDateStr);
+  //     setEndDate(endDateStr);
+  //   }
+  // };
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -108,9 +112,11 @@ export default function Historial({ onEdit, onDelete, showButtons }) {
     }
   }, [startDate, endDate]);
 
+  const currentTimestamp = Date.now();
+
   return (
     <>
-      <div>
+      {/* <div>
         <h2>Historial de clases</h2>
       </div>
       <div>
@@ -138,20 +144,67 @@ export default function Historial({ onEdit, onDelete, showButtons }) {
         </select>
       </div>
 
-      <button onClick={searchClases}>Buscar</button>
+      <button onClick={searchClases}>Buscar</button> */}
+
+      <div>
+        <h2>Historial de clases</h2>
+      </div>
+      <div>
+        <h3>Seleccioná el mes para ver tu historial de clases</h3>
+      </div>
+      <DateSelector onSearch={getHorarios} />
 
       <ul>
-        {horariosData.map((horario, index) => (
+        {/* {horarioFormated.map((hora, index) => (
           <li key={index}>
-            <input type="text" value={horario} readOnly />
+            <input type="text" value={hora} readOnly />
             {showButtons && (
               <>
-                <button onClick={() => onEdit(horario)}>Editar</button>
-                <button onClick={() => onDelete(horario)}>Borrar</button>
+                <button
+                  onClick={() => onEdit(horario[index], horarioFormated[index])}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() =>
+                    onDelete(horario[index], horarioFormated[index])
+                  }
+                >
+                  Borrar
+                </button>
               </>
             )}
           </li>
-        ))}
+        ))} */}
+
+        {horarioFormated.map((hora, index) => {
+          const horarioTimestamp = new Date(horario[index]).getTime();
+          const isPastDate = horarioTimestamp > currentTimestamp;
+
+          return (
+            <li key={index}>
+              <input type="text" value={hora} readOnly />
+              {showButtons && isPastDate && (
+                <>
+                  <button
+                    onClick={() =>
+                      onEdit(horario[index], horarioFormated[index])
+                    }
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() =>
+                      onDelete(horario[index], horarioFormated[index])
+                    }
+                  >
+                    Borrar
+                  </button>
+                </>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </>
   );
