@@ -2,8 +2,9 @@ import { createContext, useEffect, useState } from "react";
 
 export const DataSocioContext = createContext();
 
-export function DataSocioProvider({ children, id }) {
+export function DataSocioProvider({ children, id, refreshData }) {
   const [dataSocio, setDataSocio] = useState(null);
+  console.log("ID en DataSocioProvider:", id);
 
   useEffect(() => {
     const getInfoSocio = async () => {
@@ -12,13 +13,14 @@ export function DataSocioProvider({ children, id }) {
         const responseJson = await response.json();
         setDataSocio(responseJson.data);
         console.log(responseJson.data);
+        // console.log(dataSocio[0])
       } catch (error) {
         console.log(error);
       }
     };
 
     getInfoSocio();
-  }, [id]);
+  }, [id, refreshData]);
 
   return (
     <DataSocioContext.Provider value={dataSocio}>

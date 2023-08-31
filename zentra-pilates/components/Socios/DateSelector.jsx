@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import styles from "@/styles/Socios/DateSelector.module.css";
 
-export default function DateSelector({ onSearch }) {
+export default function DateSelector({ onSearch, inputShow }) {
   const [mesesOptions, setMesesOptions] = useState([]);
   const [yearsOptions, setYearsOptions] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(0);
@@ -34,7 +35,7 @@ export default function DateSelector({ onSearch }) {
   useEffect(() => {
     const fechaActual = new Date();
     const yearActual = fechaActual.getFullYear();
-    const anioInicio = 2021;
+    const anioInicio = 2023;
     const options = [];
 
     for (let i = yearActual; i >= anioInicio; i--) {
@@ -62,38 +63,143 @@ export default function DateSelector({ onSearch }) {
       const endDateStr = new Date(selectedYear, selectedMonth, 0)
         .toISOString()
         .split("T")[0];
-
-      //   setStartDate(startDateStr);
-      //   setEndDate(endDateStr);
       onSearch(startDateStr, endDateStr);
     }
   };
 
   return (
-    <>
-      <div>
-        <label htmlFor="meses">Selecciona un mes:</label>
-        <select id="meses" name="meses" onChange={handleMonthChange}>
+    <div className={styles.container_selector}>
+      {inputShow !== "ninguno" && (
+        <>
+          {inputShow === "mes" || inputShow === "ambos" ? (
+            <div className={styles.container_select}>
+              <label htmlFor="meses">Mes:</label>
+              <select
+                id="meses"
+                name="meses"
+                onChange={handleMonthChange}
+                className={styles.select}
+                required
+              >
+                {mesesOptions.map((option, index) => (
+                  <option
+                    key={index}
+                    value={option.value}
+                    className={styles.option}
+                  >
+                    {option.text}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            "null"
+          )}
+          {inputShow === "año" || inputShow === "ambos" ? (
+            <div className={styles.container_select}>
+              <label htmlFor="year">Año:</label>
+              <select
+                id="year"
+                name="year"
+                onChange={handleYearChange}
+                className={styles.select}
+                required
+              >
+                {yearsOptions.map((option, index) => (
+                  <option
+                    key={index}
+                    value={option.value}
+                    className={styles.option}
+                  >
+                    {option.text}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            "null"
+          )}
+        </>
+      )}
+
+      <button onClick={searchClases} className={styles.button}>
+        Buscar
+      </button>
+    </div>
+  );
+}
+
+export function MesSelector({ onSearch }) {
+  const [mesesOptions, setMesesOptions] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(0);
+
+  useEffect(() => {
+    const fechaActual = new Date();
+    const mesActual = fechaActual.getMonth();
+    const meses = [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ];
+    const options = [
+      { text: "Selecciona un mes", value: 0 },
+      { text: `${meses[mesActual]}`, value: mesActual + 1 },
+      {
+        text: `${meses[(mesActual + 1) % 12]}`,
+        value: (mesActual + 2) % 12 || 12,
+      },
+    ];
+
+    setMesesOptions(options);
+  }, []);
+
+  const handleMonthChange = (e) => {
+    setSelectedMonth(Number(e.target.value));
+  };
+
+  const searchClases = () => {
+    if (selectedMonth !== 0) {
+      const fechaActual = new Date();
+      const yearActual = fechaActual.getFullYear();
+      const startDateStr = `${yearActual}-${selectedMonth
+        .toString()
+        .padStart(2, "0")}-01`;
+      const endDateStr = new Date(yearActual, selectedMonth, 0)
+        .toISOString()
+        .split("T")[0];
+      onSearch(startDateStr, endDateStr);
+    }
+  };
+
+  return (
+    <div>
+      <div className={styles.container_select}>
+        <label htmlFor="meses">Mes:</label>
+        <select
+          id="meses"
+          name="meses"
+          onChange={handleMonthChange}
+          className={styles.select}
+        >
           {mesesOptions.map((option, index) => (
-            <option key={index} value={option.value}>
+            <option key={index} value={option.value} className={styles.option}>
               {option.text}
             </option>
           ))}
         </select>
       </div>
-
-      <div>
-        <label htmlFor="year">Selecciona un año:</label>
-        <select id="year" name="year" onChange={handleYearChange}>
-          {yearsOptions.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.text}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <button onClick={searchClases}>Buscar</button>
-    </>
+      <button onClick={searchClases} className={styles.button}>
+        Buscar
+      </button>
+    </div>
   );
 }

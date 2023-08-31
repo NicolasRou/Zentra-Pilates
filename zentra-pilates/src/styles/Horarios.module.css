@@ -60,7 +60,8 @@
   border-collapse: separate;
   border-spacing: 20px 20px;
   margin: 0 auto;
-}
+  width: 90%;
+  }
 .hora {
   border-bottom: 1px solid;
   font-weight: bold;

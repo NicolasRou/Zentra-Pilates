@@ -6,12 +6,17 @@ import { DataSocioProvider } from "@/contexts/dataSocio";
 export default function Dashboard() {
   const router = useRouter();
   const { id } = router.query;
-
   const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [refreshComponent, setRefreshComponent] = useState(false);
+
+  const refreshData = () => {
+    setRefreshComponent(!refreshComponent);
+  };
 
   useEffect(() => {
     getHorarios();
-  }, []);
+  }, [refreshComponent]);
 
   const getHorarios = async () => {
     try {
@@ -20,8 +25,8 @@ export default function Dashboard() {
         headers: {
           "Content-type": "application/json",
           "auth-token": localStorage.getItem("jwt"),
-         },
-        });
+        },
+      });
       if (response.ok) {
         setAuthenticated(true);
       } else {
@@ -34,14 +39,18 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.log("Error al verificar la autenticación:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      {authenticated ? (
-        <DataSocioProvider id={id}>
-          <LayoutSocios />
+      {loading ? (
+        <p>Cargando...</p>
+      ) : authenticated ? (
+        <DataSocioProvider id={id} refreshData={refreshData}>
+          <LayoutSocios refreshData={refreshData} />
         </DataSocioProvider>
       ) : null}
     </>
