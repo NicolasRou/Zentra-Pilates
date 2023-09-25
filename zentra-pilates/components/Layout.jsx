@@ -138,8 +138,8 @@ export default function Layout({ children, title, content }) {
       <footer>
         <div className={styles.footer}>
           <div className={styles.text}>
-            <p>Diseñado por goaestudio.com</p>
-            <p>Desarrollado por Nicolás Rouiller</p>
+            <p>Designed by goaestudio.com</p>
+            <p>Development by Nicolás Rouiller</p>
           </div>
           <div className={styles.links}>
             <Link href="https://www.facebook.com/Zentra-Pilates-1731269160292932/">

@@ -1,6 +1,7 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-const TOKEN_SECRET = "clave_Hasheada";
+const TOKEN_SECRET = process.env.TOKEN;
 
 const verifyToken = (req, res, next) => {
   try {

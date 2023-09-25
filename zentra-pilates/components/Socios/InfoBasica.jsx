@@ -1,13 +1,35 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { DataSocioContext } from "@/contexts/dataSocio";
 import styles from "@/styles/Socios/InfoBasica.module.css";
+import Loader from "./Loader";
 
 export default function InfoBasica() {
-  const dataSocio = useContext(DataSocioContext);
+  const { dataSocio } = useContext(DataSocioContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (!dataSocio) {
-    return <p>Cargando...</p>;
+    return <Loader />;
   }
+
+  const changeDateFormat = (dateString) => {
+    const [day, month, year] = dateString.split("/");
+    return `${year}-${month}-${day}`;
+  };
+
+  const dateFormated = changeDateFormat(dataSocio[0].fechanacimiento);
+
   return (
     <div className={styles.container_info}>
       <div className={styles.title}>
@@ -23,7 +45,7 @@ export default function InfoBasica() {
                 <input
                   type="text"
                   id="Name"
-                  value={dataSocio && dataSocio[0].name}
+                  value={dataSocio && dataSocio[0].nombre}
                   readOnly
                 />
               </label>
@@ -35,7 +57,7 @@ export default function InfoBasica() {
                 <input
                   type="text"
                   id="id"
-                  value={dataSocio && dataSocio[0].id_socios}
+                  value={dataSocio && dataSocio[0].ci}
                   readOnly
                 />
               </label>
@@ -47,7 +69,7 @@ export default function InfoBasica() {
                 <input
                   type="date"
                   id="nacimiento"
-                  value= "1995-11-29"
+                  value={dataSocio && dateFormated}
                   readOnly
                 />
               </label>
@@ -59,7 +81,7 @@ export default function InfoBasica() {
                 <input
                   type="tect"
                   id="Name"
-                  value={dataSocio && dataSocio[0].name}
+                  value={dataSocio && dataSocio[0].contacto}
                   readOnly
                 />
               </label>
@@ -76,10 +98,6 @@ export default function InfoBasica() {
                 />
               </label>
             </li>
-          </ul>
-        </div>
-        <div className={styles.info_datos}>
-          <ul>
             <li className={styles.datos_li}>
               <label htmlFor="sociedad">
                 {" "}
@@ -87,11 +105,15 @@ export default function InfoBasica() {
                 <input
                   type="text"
                   id="sociedad"
-                  value={dataSocio && dataSocio[0].name}
+                  value={dataSocio && dataSocio[0].sociedad}
                   readOnly
                 />
               </label>
             </li>
+          </ul>
+        </div>
+        <div className={styles.info_datos}>
+          <ul>
             <li className={styles.datos_li}>
               <label htmlFor="patologias">
                 {" "}
@@ -99,7 +121,11 @@ export default function InfoBasica() {
                 <input
                   type="text"
                   id="patologias"
-                  value={dataSocio && dataSocio[0].name}
+                  value={
+                    dataSocio && dataSocio[0].patologias
+                      ? dataSocio[0].patologias
+                      : ""
+                  }
                   readOnly
                 />
               </label>
@@ -111,7 +137,11 @@ export default function InfoBasica() {
                 <input
                   type="text"
                   id="embarazo"
-                  value={dataSocio && dataSocio[0].name}
+                  value={
+                    dataSocio && dataSocio[0].embarazo
+                      ? dataSocio[0].embarazo
+                      : ""
+                  }
                   readOnly
                 />
               </label>
@@ -125,7 +155,11 @@ export default function InfoBasica() {
                 <input
                   type="text"
                   id="consideraciones"
-                  value={dataSocio && dataSocio[0].name}
+                  value={
+                    dataSocio && dataSocio[0].consideraciones
+                      ? dataSocio[0].consideraciones
+                      : ""
+                  }
                   readOnly
                 />
               </label>

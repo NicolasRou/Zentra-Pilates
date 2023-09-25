@@ -14,6 +14,7 @@ export default function Historial({
   const [endDate, setEndDate] = useState("");
   const [horarioFormated, setHorarioFormated] = useState([]);
   const [horario, setHorario] = useState([]);
+  const [data, setData] = useState([]);
   const router = useRouter();
   const { id } = router.query;
 
@@ -33,7 +34,10 @@ export default function Historial({
       });
 
       const responseJson = await response.json();
+      setData(responseJson.data);
       if (responseJson.data.original.length < 1) {
+        setHorarioFormated([]);
+        setHorario([]);
         console.log("No hay reservas en el historial con esta fecha");
       } else {
         console.log(responseJson.data.converted);
@@ -59,6 +63,11 @@ export default function Historial({
       <div className={styles.datosHistorial}>
         {inputShow !== "ninguno" && (
           <DateSelector onSearch={getHorarios} inputShow={"ambos"} />
+        )}
+        {data && data.original && data.original.length < 1 && (
+          <h2 className={styles.subtitle}>
+            No hay reservas en el historial con esta fecha
+          </h2>
         )}
         {showMesSelector && <MesSelector onSearch={getHorarios} />}
         <ul className={styles.ul}>

@@ -79,7 +79,6 @@ export default function DateSelector({ onSearch, inputShow }) {
                 name="meses"
                 onChange={handleMonthChange}
                 className={styles.select}
-                required
               >
                 {mesesOptions.map((option, index) => (
                   <option
@@ -181,7 +180,7 @@ export function MesSelector({ onSearch }) {
   };
 
   return (
-    <div>
+    <div className={styles.container_selector}>
       <div className={styles.container_select}>
         <label htmlFor="meses">Mes:</label>
         <select

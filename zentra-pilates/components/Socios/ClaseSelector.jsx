@@ -7,6 +7,7 @@ export default function ClaseSelector({
   onMonthChange,
   showSelectDia,
   showSelectMes,
+  onClick,
 }) {
   const [diasOptions, setDiasOptions] = useState([]);
   const [selectedDay, setSelectedDay] = useState(0);
@@ -95,57 +96,56 @@ export default function ClaseSelector({
     onClaseChange(clase);
   };
   return (
-    <div>
-      <div className={styles.containerInput}>
-        <label htmlFor="clases">
-          Selecciona la clase a la que quieres asistir (Pilates, TRX,
-          Stretching, etc)
-        </label>
-        <select name="clases" id="clases" required onChange={handleClase}>
-          <option value="0">Selecciona una clase</option>
-          {clases.map((clase) => (
-            <option key={clase.value} value={clase.value}>
-              {clase.value}
-            </option>
-          ))}
-        </select>
+    <div className={styles.container_claseSelector}>
+      <div className={styles.container_inputs}>
+        <div className={styles.containerInput}>
+          <label htmlFor="clases">Clase:</label>
+          <select name="clases" id="clases" required onChange={handleClase}>
+            <option value="0">Selecciona una clase</option>
+            {clases.map((clase) => (
+              <option key={clase.value} value={clase.value}>
+                {clase.value}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {showSelectDia && (
+          <div className={styles.containerInput}>
+            <label htmlFor="dia">
+              Selecciona el dia que buscas asistir (dependiendo de la clase
+              elegida, los días disponibles)
+            </label>
+            <select name="dia" id="dia" required onChange={handleDayChange}>
+              {diasOptions.map((option, index) => (
+                <option
+                  key={index}
+                  value={option.value}
+                  disabled={!enabledDays.includes(option.value)}
+                >
+                  {option.text}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {showSelectMes && (
+          <div className={styles.containerInput}>
+            <label htmlFor="meses">
+              Selecciona el mes para programar la clase
+            </label>
+            <select name="meses" id="meses" onChange={handleMonthChange}>
+              {mesesOptions.map((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.text}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        <button onClick={onClick}>Buscar</button>
       </div>
-
-      {showSelectDia && (
-        <div className={styles.containerInput}>
-          <label htmlFor="dia">Selecciona el dia que buscas asistir (dependiendo de la clase elegida, los días disponibles)</label>
-          <select name="dia" id="dia" required onChange={handleDayChange}>
-            {diasOptions.map((option, index) => (
-              <option
-                key={index}
-                value={option.value}
-                disabled={!enabledDays.includes(option.value)}
-              >
-                {option.text}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      {showSelectMes && (
-        <div className={styles.containerInput}>
-          <label htmlFor="meses">
-            Selecciona el mes para programar la clase
-          </label>
-          <select name="meses" id="meses" onChange={handleMonthChange}>
-            {mesesOptions.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.text}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      {/* <div>
-        <button onClick={viewHorarios}>Buscar</button>
-      </div> */}
     </div>
   );
 }

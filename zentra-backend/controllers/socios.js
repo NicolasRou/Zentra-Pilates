@@ -1,10 +1,8 @@
 const db = require("../db/index");
-// const jwt = require("jsonwebtoken");
-// const { TOKEN_SECRET } = require("../middlewares/verify");
 
 const getSocios = async (req, res, next) => {
   try {
-    const socios = await db.query("select * from socios");
+    const socios = await db.query("select * from socios2");
     return res
       .status(200)
       .json({ success: true, data: socios.rows, message: "Socios obtenidos" });
@@ -18,7 +16,7 @@ const getSocioId = async (req, res, next) => {
     const clientId = req.params.id;
 
     const socioId = await db.query(
-      "SELECT * FROM socios WHERE id_socios = $1",
+      "SELECT * FROM socios2 WHERE ci = $1",
       [clientId]
     );
     return res.status(200).json({

@@ -12,7 +12,7 @@ const login = async (req, res, next) => {
         message: "Ingrese todos los campos",
       });
     }
-    const user = await db.query("select * from socios where mail = $1", [
+    const user = await db.query("select * from socios2 where mail = $1", [
       req.body.mail,
     ]);
 
@@ -25,7 +25,7 @@ const login = async (req, res, next) => {
     }
 
     const validPassword = await db.query(
-      "select * from socios where mail = $1 and password = $2",
+      "select * from socios2 where mail = $1 and pass = $2",
       [req.body.mail, req.body.password]
     );
     if (!validPassword.rows.length) {

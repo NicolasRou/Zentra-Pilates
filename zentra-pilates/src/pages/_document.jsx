@@ -14,7 +14,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@100;400;500;700&display=swap"
           rel="stylesheet"
         />
-        {/* <link rel="shortcut icon" href="../public/miniLogo.ico"/> */}
       </Head>
       <body>
         <Main />

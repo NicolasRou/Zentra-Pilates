@@ -7,11 +7,13 @@ import ClaseSelector from "./ClaseSelector";
 import styles from "@/styles/Socios/Agenda.module.css";
 import swal from "sweetalert";
 import { useRouter } from "next/router";
+import Loader from "./Loader";
 
 export default function Agenda() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedHorario, setSelectedHorario] = useState("");
   const [horario, setHorario] = useState("");
+  const [horarioDelete, setHorairoDelete] = useState("");
   const [modalType, setModalType] = useState(null);
   const [selectedClase, setSelectedClase] = useState(null);
   const [selectedDay, setSelectedDay] = useState(0);
@@ -20,11 +22,22 @@ export default function Agenda() {
   const [showResults, setShowResults] = useState(false);
   const [searchHorarios, setSearchHorarios] = useState([]);
   const [replaceHorario, setReplaceHorario] = useState("");
-  // const [selectedInputValue, setSelectedInputValue] = useState("");
   const router = useRouter();
   const { id } = router.query;
 
-  const dataSocio = useContext(DataSocioContext);
+  const { dataSocio } = useContext(DataSocioContext);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   const handleDayChange = (e) => {
     setSelectedDay(e.target.value);
@@ -56,16 +69,15 @@ export default function Agenda() {
     }
   };
 
-  const viewHorarios = async (req, res, next) => {
+  const viewHorarios = async () => {
     try {
-      setLoading(true);
       const clase = selectedClase;
       const diasemana = selectedDay;
       const mes = selectedMonth;
       console.log(diasemana);
       console.log(clase);
       console.log(mes);
-      const response = await fetch("http://localhost:5000/horas", {
+      const response = await fetch(`http://localhost:5000/horas/${id}`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -88,9 +100,6 @@ export default function Agenda() {
       console.log("Error al obtener los horarios libres");
     }
   };
-  useEffect(() => {
-    viewHorarios();
-  }, []);
 
   const handleEdit = (horario, horarioFormated) => {
     setSelectedHorario(horarioFormated);
@@ -101,6 +110,8 @@ export default function Agenda() {
 
   const handleDelete = (horario, horarioFormated) => {
     setSelectedHorario(horarioFormated);
+    setHorairoDelete(horario);
+    console.log(horario);
     setModalType("delete");
   };
 
@@ -118,51 +129,78 @@ export default function Agenda() {
     setShowResults(false);
   };
 
-  const actionReplace = (replaceHorario) => {
+  const actionReplace = (index) => {
     swal({
       title: "¿Estás seguro?",
       text: "Esta acción modificará tus horarios.",
       icon: "warning",
       buttons: ["Cancelar", "Sí"],
       dangerMode: true,
-    }).then((confirmed) => {
+    }).then(async (confirmed) => {
       if (confirmed) {
-        replaceHora(replaceHorario);
+        setShowResults(false);
+
+        try {
+          const clase = selectedClase;
+          const horaActual = horario;
+          const horaSeleciconada = replaceHorario[index];
+          console.log(horaActual);
+          console.log(horaSeleciconada);
+          const data = await fetch(`http://localhost:5000/replace/${id}`, {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+              "auth-token": localStorage.getItem("jwt"),
+            },
+            body: JSON.stringify({
+              clase: clase,
+              horaActual: horaActual,
+              horaSeleccionada: horaSeleciconada,
+            }),
+          });
+          const dataJson = await data.json();
+          console.log(dataJson);
+
+          if (dataJson.success === true) {
+            swal({
+              icon: "success",
+              title: "Horario modificado con éxito",
+              timer: 1500,
+            });
+          }
+        } catch (error) {
+          console.log("Error");
+        }
       }
     });
   };
-
-  const replaceHora = async (selectedInputValue) => {
+  const deleteHorario = async (horarioDelete) => {
     try {
-      const clase = selectedClase;
-      const horaActual = horario;
-      const horaSeleciconada = selectedInputValue;
-      console.log(horaActual);
-      console.log(horaSeleciconada);
-      const data = await fetch(`http://localhost:5000/replace/${id}`, {
+      const selectedDate = horarioDelete;
+      console.log(selectedHorario);
+      const deleteDate = await fetch(`http://localhost:5000/delete/${id}`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
           "auth-token": localStorage.getItem("jwt"),
         },
         body: JSON.stringify({
-          clase: clase,
-          horaActual: horaActual,
-          horaSeleccionada: horaSeleciconada,
+          selectedDate: selectedDate,
         }),
       });
-      const dataJson = await data.json();
-      console.log(dataJson);
 
-      if (dataJson.success === true) {
+      const deleteDateJson = await deleteDate.json();
+
+      if (deleteDateJson.success === true) {
         swal({
           icon: "success",
-          title: "Horario modificado con éxito",
+          title: "Reserva eliminada con éxito",
           timer: 1500,
         });
       }
     } catch (error) {
-      console.log("Error");
+      console.log(error);
+      alert("No se ha podido eliminar la reserva");
     }
   };
   return (
@@ -172,10 +210,12 @@ export default function Agenda() {
           modalType === "edit" || modalType === "delete" ? "blur" : "show"
         }
       >
-        {dataSocio && dataSocio[0].plan === "mensual" && (
+        {dataSocio && dataSocio[0].plan === "Plan mensual fijo" && (
           <>
-            <div className={styles.container_titles}>
-              <h2 className={styles.title}>Agenda de clases</h2>
+            <div className={styles.container_text}>
+              <div className={styles.container_title}>
+                <h2 className={styles.title}>Agenda de clases</h2>
+              </div>
               <h3 className={styles.subtitle}>
                 Podrás ver tus proximas clases, re-agendarlas, o borrarlas
               </h3>
@@ -194,12 +234,7 @@ export default function Agenda() {
           </>
         )}
 
-        {dataSocio && dataSocio[0].plan === "cuponera" && (
-          <>
-            <h2>Esto es si es cuponera</h2>
-            <AgendaCuponera />
-          </>
-        )}
+        {dataSocio && dataSocio[0].plan === "cuponera" && <AgendaCuponera />}
       </div>
 
       <ModalAgenda
@@ -218,43 +253,51 @@ export default function Agenda() {
                 onMonthChange={handleMonthChange}
                 showSelectMes={true}
                 showSelectDia={true}
+                onClick={searchOpen}
               />
-              <div className={styles.container_button}>
+              {/* <div className={styles.container_button}>
                 <button onClick={searchOpen}>Buscar</button>
-              </div>
+              </div> */}
             </div>
             {showResults ? (
               <>
                 <div
-                  className={` ${showResults ? styles.container_search : ""} `}
+                  className={`${showResults ? styles.container_search : ""}`}
                 >
                   <div className={styles.container_title}>
                     <h3>Resultados de la busqueda:</h3>
                   </div>
-                  <div>
-                    <ul>
-                      {searchHorarios.map((fecha, index) => (
-                        <li key={index} className={styles.li}>
-                          <input type="text" value={fecha} readOnly />
-                          <button
-                            className={styles.button}
-                            onClick={() => {
-                              // setSelectedInputValue(replaceHorario),
-                              actionReplace(replaceHorario[index]);
-                            }}
-                          >
-                            Seleccionar
-                          </button>
-                          <button
-                            onClick={searchClose}
-                            className={styles.button}
-                          >
-                            Cancelar
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {replaceHorario && replaceHorario.length === 0 ? (
+                    <h3 className={styles.subtitle2}>
+                      Ya tienes agenda para la clase y dia seleccionados
+                    </h3>
+                  ) : (
+                    <div>
+                      <ul>
+                        {searchHorarios.map((fecha, index) => (
+                          <li key={index} className={styles.li}>
+                            <input type="text" value={fecha} readOnly />
+                            {replaceHorario[index] && (
+                              <button
+                                className={styles.button}
+                                onClick={() => {
+                                  actionReplace(index);
+                                }}
+                              >
+                                Seleccionar
+                              </button>
+                            )}
+                            <button
+                              onClick={searchClose}
+                              className={styles.button}
+                            >
+                              Cancelar
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <button onClick={searchClose} className={styles.button}>
                     Cancelar
                   </button>
@@ -272,9 +315,24 @@ export default function Agenda() {
         handleClose={closeModal}
         title="Borrar Horario"
         content={
-          <div>
-            <p>Horario seleccionado: {selectedHorario}</p>
-          </div>
+          <>
+            <div className={styles.container_delete}>
+              <p>Horario seleccionado: {selectedHorario}</p>
+              <h3>¿Deseas borrar tu reserva en el horario seleccionado?</h3>
+              <p>
+                Para editar un horario que ya tienes reservado, por otro horario
+                disponible, ve a "editar"
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                deleteHorario(horarioDelete);
+              }}
+              className={styles.delete}
+            >
+              Borrar
+            </button>
+          </>
         }
       />
       <style jsx>

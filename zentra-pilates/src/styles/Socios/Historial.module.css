@@ -5,31 +5,45 @@
 
 .datosHistorial {
   display: flex;
-  gap: 30%;
-  flex-direction: column;
+  gap: 10%;
+  flex-direction: row;
 }
 .ul {
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 60%;
-  margin-bottom: 20%;
 }
 .container_resultados {
-  border: 1px solid;
-  border-radius: 5px;
   text-align: center;
-  padding: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding: 2%;
+  border-radius: 20px;
 }
 .container_resultados h4 {
   font-weight: 600;
   font-size: 1.1rem;
+}
+.subtitle {
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin: 0;
+  width: 100%;
+  min-width: 300px;
+  text-align: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding: 2%;
+  border-radius: 20px;
 }
 .li {
   display: flex;
   justify-content: center;
   gap: 15px;
   padding: 5px;
+  width: 90%;
+  margin: auto;
 }
 .li input {
   border-radius: 5px;
@@ -37,6 +51,7 @@
   border: none;
   text-align: center;
   outline: none;
+  width: 100%;
 }
 .li input::first-letter {
   text-transform: uppercase;

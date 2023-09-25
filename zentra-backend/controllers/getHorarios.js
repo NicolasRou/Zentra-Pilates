@@ -38,7 +38,7 @@ const formatDate = (dates) => {
 
 const getHorarios = async (req, res, next) => {
   try {
-    const horarios = await db.query("select * from prueba2");
+    const horarios = await db.query("select * from horarios");
     return res.status(200).json({
       success: true,
       data: horarios.rows,
@@ -55,7 +55,7 @@ const getHorariosId = async (req, res, next) => {
     const { startDate, endDate } = req.body;
 
     const horariosId = await db.query(
-      "SELECT fecha FROM prueba2 WHERE ((alumno1 = $1) or (alumno2 = $1) or (alumno3 = $1)) AND fecha BETWEEN $2 AND $3 order by fecha asc",
+      "SELECT fecha FROM horarios WHERE ((alumno1 = $1) or (alumno2 = $1) or (alumno3 = $1)) AND fecha BETWEEN $2 AND $3 order by fecha asc",
       [clientId, startDate, endDate]
     );
 
@@ -85,18 +85,21 @@ const getHorariosId = async (req, res, next) => {
 const viewHorarios = async (req, res, next) => {
   try {
     const { diasemana, clase, mes } = req.body;
+    const { id } = req.params;
 
     const horariosAvailable = await db.query(
       `SELECT *
-      FROM prueba2
-      WHERE ((alumno1 IS NULL OR alumno1 = '') OR
-             (alumno2 IS NULL OR alumno2 = '') OR
-             (alumno3 IS NULL OR alumno3 = '')) AND
-            clase = $1 AND
-            diasemana = $2 AND
-            extract(month from fecha) = $3 AND
-            fecha >= current_timestamp order by fecha asc`,
-      [clase, diasemana, mes]
+      FROM horarios
+      WHERE 
+          (alumno1 <> $1 OR alumno1 IS NULL) AND
+          (alumno2 <> $1 OR alumno2 IS NULL) AND
+          (alumno3 <> $1 OR alumno3 IS NULL) AND
+          clase = $2 AND
+          diasemana = $3 AND
+          extract(month from fecha) = $4 AND
+          fecha >= current_timestamp
+      ORDER BY fecha ASC;`,
+      [id, clase, diasemana, mes]
     );
 
     const timeZoneOffset = -3;
@@ -124,6 +127,7 @@ const viewHorarios = async (req, res, next) => {
 
 const viewNextWeekHorarios = async (req, res, next) => {
   try {
+    const { id } = req.params;
     const { clase } = req.body;
 
     const currentDate = new Date();
@@ -143,13 +147,13 @@ const viewNextWeekHorarios = async (req, res, next) => {
 
     const clasesDisponibles = await db.query(
       `SELECT *
-      FROM prueba2
-      WHERE ((alumno1 IS NULL OR alumno1 = '') OR
-             (alumno2 IS NULL OR alumno2 = '') OR
-             (alumno3 IS NULL OR alumno3 = '')) AND
-            clase = $1 AND
-            fecha >= $2 AND fecha < $3 order by fecha asc`,
-      [clase, formattedStartDate, formattedEndDate]
+      FROM horarios
+        WHERE (alumno1 <> $1 OR alumno1 IS NULL) AND
+              (alumno2 <> $1 OR alumno2 IS NULL) AND
+              (alumno3 <> $1 OR alumno3 IS NULL) AND
+            clase = $2 AND
+            fecha >= $3 AND fecha < $4 order by fecha asc`,
+      [id, clase, formattedStartDate, formattedEndDate]
     );
 
     const timeZoneOffset = -3;
@@ -180,6 +184,46 @@ const viewNextWeekHorarios = async (req, res, next) => {
   }
 };
 
+const agendaHora = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { fecha } = req.body;
+
+    await db.query(
+      `UPDATE horarios
+      SET
+        alumno1 = CASE
+          WHEN alumno1 IS NULL THEN $1
+          ELSE alumno1
+        END,
+        alumno2 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NULL THEN $1
+          ELSE alumno2
+        END,
+        alumno3 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NULL THEN $1
+          ELSE alumno3
+        END
+      WHERE
+        fecha = $2;
+    `,
+      [id, fecha]
+    );
+
+    // const fechaConvertida = dateConvert(fecha);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        data: fecha,
+      },
+      message: "Horario agendado!",
+    });
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 const replaceHora = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -188,7 +232,7 @@ const replaceHora = async (req, res, next) => {
     await db.query("BEGIN;");
 
     const updateQuery = `
-      UPDATE prueba2
+      UPDATE horarios
       SET 
         alumno1 = CASE 
           WHEN alumno1 IS NULL THEN $1 
@@ -210,7 +254,7 @@ const replaceHora = async (req, res, next) => {
     await db.query(updateQuery, [id, clase, horaSeleccionada]);
 
     const nullifyQuery = `
-      UPDATE prueba2
+      UPDATE horarios
       SET 
         alumno1 = CASE 
           WHEN fecha = $1 AND alumno1 = $2 THEN NULL 
@@ -250,10 +294,33 @@ const replaceHora = async (req, res, next) => {
   }
 };
 
+const deleteClase = async (req, res, next) => {
+  try {
+    const { selectedDate } = req.body;
+    const { id } = req.params;
+
+    await db.query(
+      `UPDATE horarios SET alumno1 = NULLIF(alumno1, $1),
+      alumno2 = NULLIF(alumno2, $1),
+      alumno3 = NULLIF(alumno3, $1)
+      WHERE fecha = $2`,
+      [id, selectedDate]
+    );
+
+    res
+      .status(200)
+      .json({ success: true, message: "Reserva eliminada con éxito" });
+  } catch (error) {
+    console.log("No se ha podido eliminar tu reserva");
+  }
+};
+
 module.exports = {
   getHorarios,
   getHorariosId,
   viewHorarios,
   viewNextWeekHorarios,
   replaceHora,
+  deleteClase,
+  agendaHora,
 };
