@@ -3,6 +3,7 @@ import swal from "sweetalert";
 import LayoutSocios from "../../components/Socios/LayoutSocios";
 import Clases from "../../components/Admin/Clases";
 import Socios from "../../components/Admin/Socios";
+import Loader from "../../components/Socios/Loader";
 
 export default function Admin() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -51,18 +52,17 @@ export default function Admin() {
   return (
     <>
       {isLoading ? (
-        <p>Cargando...</p>
+        <Loader />
       ) : authenticated ? (
         <>
           <LayoutSocios
             titleMenu={<p>Consultas</p>}
-            titleTab1={<p>&nbsp;&nbsp;Clases</p>}
-            titleTab2={<p>Editar info socios</p>}
-            titleTab3={<p>Comentarios a socios</p>}
+            titleTab1={<p>&nbsp;&nbsp;Ver clases</p>}
+            titleTab2={<p>&nbsp;Info socios</p>}
+            titleTab3={<p>&nbsp;Agenda socios</p>}
             tab1={<Clases />}
             tab2={<Socios />}
           />
-          <h2>Hola esto es admin</h2>
         </>
       ) : null}
     </>

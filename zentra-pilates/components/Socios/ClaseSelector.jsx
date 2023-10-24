@@ -8,6 +8,7 @@ export default function ClaseSelector({
   showSelectDia,
   showSelectMes,
   onClick,
+  buttonName
 }) {
   const [diasOptions, setDiasOptions] = useState([]);
   const [selectedDay, setSelectedDay] = useState(0);
@@ -65,9 +66,7 @@ export default function ClaseSelector({
     { value: "Pilates", days: [1, 2, 3, 4, 5, 6] },
     { value: "Pilates stretching", days: [5, 6] },
     { value: "Pilates funcional", days: [5] },
-    { value: "Pilates TRX", days: [2] },
-    { value: "TRX", days: [1] },
-    { value: "TRX pilates", days: [4, 5] },
+    { value: "TRX pilates", days: [1, 2, 4, 5] },
     { value: "Stretching", days: [1, 2, 6] },
     { value: "Funcional stretching", days: [3] },
   ];
@@ -113,7 +112,7 @@ export default function ClaseSelector({
         {showSelectDia && (
           <div className={styles.containerInput}>
             <label htmlFor="dia">
-              Selecciona el dia que buscas asistir (dependiendo de la clase
+              Selecciona el dia (dependiendo de la clase
               elegida, los días disponibles)
             </label>
             <select name="dia" id="dia" required onChange={handleDayChange}>
@@ -144,7 +143,7 @@ export default function ClaseSelector({
             </select>
           </div>
         )}
-        <button onClick={onClick}>Buscar</button>
+        <button onClick={onClick}>{buttonName}</button>
       </div>
     </div>
   );

@@ -14,16 +14,13 @@ export default function Planes() {
         <tbody>
           <tr className={styles.encabezados}>
             <th>
-              <h3>1 Vez por semana</h3>
-              <p>4 clases mensuales</p>
+              <h3>4 Clases mensuales</h3>
             </th>
             <th>
-              <h3>2 Veces por semana</h3>
-              <p>8 clases mensuales</p>
+              <h3>8 Clases mensuales</h3>
             </th>
             <th>
-              <h3>3 Veces por semana</h3>
-              <p>12 clases mensuales</p>
+              <h3>12 Clases mensuales</h3>
             </th>
           </tr>
           <tr className={styles.precios}>

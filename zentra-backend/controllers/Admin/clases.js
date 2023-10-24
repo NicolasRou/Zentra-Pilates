@@ -1,4 +1,5 @@
 const db = require("../../db/index");
+const { dateConvert } = require("../getHorarios");
 
 const getClases = async (req, res, next) => {
   try {
@@ -7,6 +8,7 @@ const getClases = async (req, res, next) => {
       `SELECT
       h.fecha,
       h.clase,
+      s1.ci AS ci_alumno1,
       s1.nombre AS nombre_alumno1,
       s2.nombre AS nombre_alumno2,
       s3.nombre AS nombre_alumno3
@@ -35,30 +37,127 @@ const getClases = async (req, res, next) => {
       });
     }
 
-    res
-      .status(200)
-      .json({ success: true, data: clases.rows, message: "Clases obtenidas" });
+    const alumnos = [
+      {
+        ci: clases.rows[0].ci_alumno1,
+        nombre: clases.rows[0].nombre_alumno1,
+      },
+      {
+        ci: clases.rows[0].ci_alumno2,
+        nombre: clases.rows[0].nombre_alumno2,
+      },
+      {
+        ci: clases.rows[0].ci_alumno3,
+        nombre: clases.rows[0].nombre_alumno3,
+      },
+    ];
+
+    res.status(200).json({
+      success: true,
+      data: clases.rows,
+      alumnos: alumnos,
+      message: "Clases obtenidas",
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        data: [],
-        message: "Error al obtener las clases",
-      });
+    res.status(500).json({
+      success: false,
+      data: [],
+      message: "Error al obtener las clases",
+    });
   }
 };
 
-const holasocio = async (req, res) => {
+// Clases del socio en los ultimos 30 dias
+const claseSocio = async (req, res) => {
   try {
     const { id } = req.body;
-
-    const getsocio = await db.query(
-      `select * from horarios where alumno1 = $1`,
+    const clase = await db.query(
+      `SELECT fecha
+      FROM horarios
+      WHERE fecha >= current_date - interval '1 month' AND fecha <= current_date
+      AND (alumno1 = $1 OR alumno2 = $1 OR alumno3 = $1)
+      ORDER BY fecha ASC;`,
       [id]
     );
-    return res.status(200).json({ data: getsocio.rows });
-  } catch (error) {}
+
+    const timeZoneOffset = -3;
+    const horarios = dateConvert(
+      clase.rows.map((row) => row.fecha),
+      timeZoneOffset
+    );
+
+    res.status(200).json({
+      success: true,
+      data: horarios,
+      message: "Horarios obtenidos",
+    });
+  } catch (error) {
+    console.error("Error en la consulta SQL:", error);
+    res.status(500).json({
+      success: false,
+      data: [],
+      message: "Error al obtener clases del socio",
+    });
+  }
 };
 
-module.exports = { getClases, holasocio };
+const eliminarClase = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const { clase, diasemana } = req.body;
+
+    const eliminar = await db.query(
+      `UPDATE horarios
+    SET
+      alumno1 = CASE
+        WHEN alumno1 = $1 THEN null
+        ELSE alumno1
+      END,
+      alumno2 = CASE
+        WHEN alumno2 = $1 THEN null
+        ELSE alumno2
+      END,
+      alumno3 = CASE
+        WHEN alumno3 = $1 THEN null
+        ELSE alumno3
+      end
+      where clase = $2 and diasemana = $3`,
+      [id, clase, diasemana]
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Alumno eliminado en horario seleccionado",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      data: [],
+      message: "Error al eliminar alumno de la clase",
+    });
+  }
+};
+
+const agregarClase = async (req, res) => {
+  try {
+    const { clase, dia_semana, hora, nuevo_valor } = req.body;
+
+    const agregar = await db.query(
+      `
+    SELECT actualizar_alumno($1, $2, $3, $4)
+    `,
+      [clase, dia_semana, hora, nuevo_valor]
+    );
+
+    res.status(200).json({
+      message: "Alumno actualizado exitosamente",
+      data: agregar.rows[0],
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar el alumno",
+    });
+  }
+};
+
+module.exports = { getClases, eliminarClase, agregarClase, claseSocio };

@@ -210,8 +210,6 @@ const agendaHora = async (req, res, next) => {
       [id, fecha]
     );
 
-    // const fechaConvertida = dateConvert(fecha);
-
     res.status(200).json({
       success: true,
       data: {
@@ -316,6 +314,7 @@ const deleteClase = async (req, res, next) => {
 };
 
 module.exports = {
+  dateConvert,
   getHorarios,
   getHorariosId,
   viewHorarios,

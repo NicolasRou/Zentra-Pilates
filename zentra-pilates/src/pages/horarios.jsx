@@ -146,7 +146,7 @@ export default function Horarios() {
                 <tr>
                   <td className={styles.hora}>17:00</td>
                   <td>
-                    <p>TRX presencial</p>
+                    <p>TRX + Pilates presencial</p>
                   </td>
                   <td>
                     <p>Pilates presencial</p>
@@ -168,7 +168,7 @@ export default function Horarios() {
                     <p>Pilates presencial</p>
                   </td>
                   <td>
-                    <p>Pilates presencial + TRX pres.</p>
+                    <p>TRX + Pilates presencial</p>
                   </td>
                   <td>
                     <p>Pilates presencial</p>

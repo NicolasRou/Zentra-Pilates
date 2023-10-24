@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
+import styles from "@/styles/Admin/Clases.module.css";
+import { useRouter } from "next/router";
 
 export default function Clases() {
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState("");
   const [availablehorarios, setAvailablehorarios] = useState([]);
   const [hora, setHora] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [clase, setClase] = useState("");
-  const [alumno1, setAlumno1] = useState("");
-  const [alumno2, setAlumno2] = useState("");
-  const [alumno3, setAlumno3] = useState("");
+  const [alumnos, setAlumnos] = useState([]);
+
 
   const handleDateChange = (event) => {
     const selectedDate = event.target.value;
@@ -65,6 +67,7 @@ export default function Clases() {
       const responseJson = await response.json();
       console.log(responseJson);
       const data = responseJson.data[0];
+      setAlumnos(responseJson.alumnos);
       console.log(responseJson.data);
 
       if (responseJson.data.length === 0) {
@@ -77,9 +80,6 @@ export default function Clases() {
         return;
       }
       setClase(responseJson.data[0].clase);
-      setAlumno1(data.nombre_alumno1);
-      setAlumno2(data.nombre_alumno2);
-      setAlumno3(data.nombre_alumno3);
 
       if (!response.ok) {
         throw new Error(responseJson.message);
@@ -94,51 +94,64 @@ export default function Clases() {
     setShowResults(true);
   };
 
+  const handleVerSocio = (ci) => {
+    router.push(`/editar/${ci}`);
+  };
+
   return (
-    <div>
-      <div>
-        <h2>Selecciona fecha y hora para ver los alumnos</h2>
-      </div>
-      <div>
-        <input type="date" value={selectedDate} onChange={handleDateChange} />
-      </div>
-      {availablehorarios.length > 0 && (
-        <div>
-          <label htmlFor="horairo">Selecciona un horario:</label>
-          <select id="horairo" onChange={handleHourChange}>
-            {availablehorarios.map((horario) => (
-              <option key={horario} value={horario}>
-                {horario}
-              </option>
-            ))}
-          </select>
+    <section className={styles.container_clases}>
+      <div className={styles.container_title}>
+        <div className={styles.title}>
+          <h2>Selecciona fecha y hora para ver los alumnos</h2>
         </div>
-      )}
-
-      <div>
-        <button onClick={onSearch}>Buscar</button>
       </div>
-
-      {showResults ? (
-        <div>
-          <p>Clase: {clase}</p>
-          <div>
-            <h3>Alumnos agendados:</h3>
-            <ul>
-              <li>{alumno1}</li>
-              <li>{alumno2}</li>
-              <li>{alumno3}</li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
+      <div className={styles.container_info}>
+        <div className={styles.container_inputs}>
+          <div className={styles.input}>
+            <label htmlFor="fecha">Selecciona fecha:</label>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
           </div>
+
+          {availablehorarios.length > 0 && (
+            <div className={styles.input}>
+              <label htmlFor="horairo">Selecciona un horario:</label>
+              <select id="horairo" onChange={handleHourChange}>
+                {availablehorarios.map((horario) => (
+                  <option key={horario} value={horario}>
+                    {horario}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          <button className={styles.button} onClick={onSearch}>
+            Buscar
+          </button>
         </div>
-      ) : null}
-    </div>
+
+        {showResults ? (
+          <div className={styles.container_results}>
+            <h3 className={styles.subtitle}>Clase: {clase}</h3>
+            <div>
+              <h3 className={styles.subtitle}>Alumnos agendados:</h3>
+              <ul className={styles.list}>
+                {alumnos
+                  .filter((alumno) => alumno && alumno.nombre)
+                  .map((alumno, index) => (
+                    <li key={index}>
+                      <p>{alumno.nombre}</p>
+                      <button onClick={() => handleVerSocio(alumno.ci)} className={styles.button}>Ver socio</button>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </section>
   );
 }

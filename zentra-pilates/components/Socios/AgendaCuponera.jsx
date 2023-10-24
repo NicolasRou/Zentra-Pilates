@@ -133,6 +133,7 @@ export default function AgendaCuponera() {
             showSelectDia={false}
             showSelectMes={false}
             onClick={horariosDisponibles}
+            buttonName={"Buscar"}
           />
         </div>
         <div className={styles.container_results}>

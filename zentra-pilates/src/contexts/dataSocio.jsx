@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 
 export const DataSocioContext = createContext();
 
@@ -13,7 +13,7 @@ export function DataSocioProvider({ children, id, refreshData }) {
         const response = await fetch(`http://localhost:5000/socios/${id}`);
         const responseJson = await response.json();
         setDataSocio(responseJson.data);
-        setNombre(responseJson.data[0].nombre);
+        setNombre(responseJson.data[0]?.nombre);
         console.log(responseJson.data);
       } catch (error) {
         console.log(error);
@@ -22,12 +22,11 @@ export function DataSocioProvider({ children, id, refreshData }) {
 
     getInfoSocio();
   }, [id, refreshData]);
-  
+
   const contextValues = {
     dataSocio,
     nombre,
   };
-
 
   return (
     <DataSocioContext.Provider value={contextValues}>
@@ -35,3 +34,5 @@ export function DataSocioProvider({ children, id, refreshData }) {
     </DataSocioContext.Provider>
   );
 }
+
+export const useSocio = () => useContext(DataSocioContext);

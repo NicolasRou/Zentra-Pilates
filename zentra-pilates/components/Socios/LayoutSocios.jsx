@@ -42,9 +42,9 @@ export default function LayoutSocios({
   };
   return (
     <>
-      <div className={styles.container_nav}>
+      <header className={styles.container_nav}>
         <div className={styles.container_logo}>
-          <Image src={logo} width={200} alt="Profesora de pilates" />
+          <Image src={logo} width={200} alt="Logo Zentra pilates" />
         </div>
         <nav className={styles.nav}>
           <ul className={styles.nav_ul}>
@@ -62,19 +62,19 @@ export default function LayoutSocios({
             </li>
           </ul>
         </nav>
-      </div>
+      </header>
       <div className={styles.container_datos}>
-        <div className={styles.menu_datos}>
+        <aside className={styles.menu_datos}>
           <div className={styles.menu_title}>
             {titleMenu}
-            <Image src={personal} width={20} alt="personal" />
+            <Image src={personal} width={20} alt="Icono" />
           </div>
           <div className={styles.container_button}>
             <button
               className={activeTab == "1" ? "active" : "button"}
               onClick={() => selectTab(1)}
             >
-              <Image src={perfil} width={20} alt="perfil" />
+              <Image src={perfil} width={20} alt="icono perfil" />
 
               {titleTab1}
             </button>
@@ -82,7 +82,7 @@ export default function LayoutSocios({
               className={activeTab == "2" ? "active" : "button"}
               onClick={() => selectTab(2)}
             >
-              <Image src={historial} width={20} alt="historial" />
+              <Image src={historial} width={20} alt="Icono historial" />
 
               {titleTab2}
             </button>
@@ -90,12 +90,12 @@ export default function LayoutSocios({
               className={activeTab == "3" ? "active" : "button"}
               onClick={() => selectTab(3)}
             >
-              <Image src={agenda} width={20} alt="agenda" />
+              <Image src={agenda} width={20} alt="Icono agenda" />
 
               {titleTab3}
             </button>
           </div>
-        </div>
+        </aside>
         <div className={activeTab == "1" ? "show " : "displayNone"}>{tab1}</div>
         <div className={activeTab == "2" ? "show " : "displayNone"}>
           {titlesInTab2}

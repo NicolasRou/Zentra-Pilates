@@ -254,10 +254,8 @@ export default function Agenda() {
                 showSelectMes={true}
                 showSelectDia={true}
                 onClick={searchOpen}
+                buttonName={"Buscar"}
               />
-              {/* <div className={styles.container_button}>
-                <button onClick={searchOpen}>Buscar</button>
-              </div> */}
             </div>
             {showResults ? (
               <>
