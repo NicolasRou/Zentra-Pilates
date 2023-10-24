@@ -103,6 +103,25 @@ export default function Horarios() {
               </thead>
               <tbody>
                 <tr>
+                  <td className={styles.hora}>08:30</td>
+                  <td>
+                    <p>-</p>
+                  </td>
+                  <td>
+                    <p>Pilates presencial</p>
+                  </td>
+                  <td>
+                    <p>-</p>
+                  </td>
+                  <td>
+                    <p>Pilates + Stretching pres.</p>
+                  </td>
+                  <td>
+                    <p></p>
+                  </td>
+                  <td>-</td>
+                </tr>
+                <tr>
                   <td className={styles.hora}>09:00</td>
                   <td>
                     <p>Pilates presencial</p>
@@ -121,6 +140,7 @@ export default function Horarios() {
                   </td>
                   <td>-</td>
                 </tr>
+
                 <tr>
                   <td className={styles.hora}>11:00</td>
                   <td>-</td>
