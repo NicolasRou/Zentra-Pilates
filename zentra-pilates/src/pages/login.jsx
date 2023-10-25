@@ -14,7 +14,7 @@ export default function Login() {
 
   const setJwt = async () => {
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("zentra-pilates-production.up.railway.app/login", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -46,7 +46,7 @@ export default function Login() {
       localStorage.setItem("jwt", responseJson.token);
       const clientId = responseJson.data[0].ci;
 
-      if (clientId === process.env.PASSWORD_ADMIN) {
+      if (clientId === "41688136") {
         router.push("/admin");
       } else {
         router.push(`/dashboard?id=${clientId}`);
