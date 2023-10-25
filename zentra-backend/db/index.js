@@ -6,7 +6,7 @@ const config = {
   host: process.env.HOST_DB,
   password: process.env.PASSWORD_DB,
   database: process.env.DATABASE,
-  port: process.env.PORT,
+  port: process.env.PG_PORT,
 };
 
 const pool = new Pool(config);
