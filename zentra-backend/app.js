@@ -4,7 +4,7 @@ const horariosRoutes = require("./routes/horarios");
 const adminRoutes = require("./routes/admin")
 const app = express();
 const cors = require("cors");
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
