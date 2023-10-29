@@ -80,19 +80,16 @@ const claseSocio = async (req, res) => {
       [id]
     );
 
-    const timeZoneOffset = -3;
-    const horarios = dateConvert(
-      clase.rows.map((row) => row.fecha),
-      timeZoneOffset
-    );
-    req.setLocale("es");
-    res.send(
-      res.__res.status(200).json({
-        success: true,
-        data: horarios,
-        message: "Horarios obtenidos",
-      })
-    );
+    // const timeZoneOffset = -3;
+    // const horarios = dateConvert(
+    //   clase.rows.map((row) => row.fecha),
+    //   timeZoneOffset
+    // );
+    res.status(200).json({
+      success: true,
+      data: clase.rows,
+      message: "Horarios obtenidos",
+    });
   } catch (error) {
     console.error("Error en la consulta SQL:", error);
     res.status(500).json({
