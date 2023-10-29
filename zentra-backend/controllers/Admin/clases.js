@@ -80,14 +80,13 @@ const claseSocio = async (req, res) => {
       [id]
     );
 
-    // const timeZoneOffset = -3;
-    // const horarios = dateConvert(
-    //   clase.rows.map((row) => row.fecha),
-    //   timeZoneOffset
-    // );
+    const horarios = dateConvert(
+      clase.rows.map((row) => row.fecha)
+    
+    );
     res.status(200).json({
       success: true,
-      data: clase.rows,
+      data: horarios,
       message: "Horarios obtenidos",
     });
   } catch (error) {

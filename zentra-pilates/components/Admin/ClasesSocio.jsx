@@ -11,7 +11,6 @@ export default function ClasesSocio() {
   const claseSocio = async () => {
     try {
       const ci = id;
-
       const response = await fetch(
         "https://zentra-pilates-production.up.railway.app/claseSocio",
         {
@@ -49,7 +48,7 @@ export default function ClasesSocio() {
         <ul>
           {dataClase.map((clase, index) => (
             <li key={index}>
-              <p>{clase}</p>
+              <p>{clase.fecha}</p>
             </li>
           ))}
         </ul>

@@ -13,7 +13,7 @@ const dateConvert = (dates, timeZoneOffset) => {
       second: "numeric",
       weekday: "long",
     };
-    const fechaLocal = fechaObj.toLocaleString(undefined, options);
+    const fechaLocal = fechaObj.toLocaleString("es-ES", options);
     return fechaLocal;
   });
 };
