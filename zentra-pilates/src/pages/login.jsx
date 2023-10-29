@@ -14,16 +14,19 @@ export default function Login() {
 
   const setJwt = async () => {
     try {
-      const response = await fetch("zentra-pilates-production.up.railway.app/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          mail: mail,
-          password: password,
-        }),
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            mail: mail,
+            password: password,
+          }),
+        }
+      );
 
       if (!response.ok) {
         swal({
@@ -46,7 +49,7 @@ export default function Login() {
       localStorage.setItem("jwt", responseJson.token);
       const clientId = responseJson.data[0].ci;
 
-      if (clientId === "41688136") {
+      if (clientId === process.env.PASSWORD_ADMIN) {
         router.push("/admin");
       } else {
         router.push(`/dashboard?id=${clientId}`);

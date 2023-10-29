@@ -20,7 +20,7 @@ const login = async (req, res, next) => {
       return res.status(401).json({
         success: false,
         data: [],
-        message: "Mail incorrecto",
+        message: "Datos incorrectos",
       });
     }
 
@@ -32,7 +32,7 @@ const login = async (req, res, next) => {
       return res.status(401).json({
         success: false,
         data: [],
-        message: "Contraseña incorrecta",
+        message: "Datos incorrectos",
       });
     }
 

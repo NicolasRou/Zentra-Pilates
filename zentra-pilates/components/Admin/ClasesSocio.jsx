@@ -12,18 +12,22 @@ export default function ClasesSocio() {
     try {
       const ci = id;
 
-      const response = await fetch("http://localhost:5000/claseSocio", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          id: ci,
-        }),
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/claseSocio",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            id: ci,
+          }),
+        }
+      );
       const responseJson = await response.json();
       setDataClase(responseJson.data);
+      console.log(responseJson);
     } catch (error) {
       console.log("Error", error);
     } finally {
@@ -41,13 +45,17 @@ export default function ClasesSocio() {
 
   return (
     <section>
-      <ul>
-        {dataClase.map((clase, index) => (
-          <li key={index}>
-            <p>{clase}</p>
-          </li>
-        ))}
-      </ul>
+      {dataClase && dataClase.length > 0 ? (
+        <ul>
+          {dataClase.map((clase, index) => (
+            <li key={index}>
+              <p>{clase}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No tiene clases agendadas</p>
+      )}
     </section>
   );
 }

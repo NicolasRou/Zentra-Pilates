@@ -101,7 +101,7 @@ export default function EditSocio() {
         },
       };
       console.log(campo, nuevoValor, ci);
-      const response = await fetch("http://localhost:5000/editSocio", {
+      const response = await fetch("https://zentra-pilates-production.up.railway.app/editSocio", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

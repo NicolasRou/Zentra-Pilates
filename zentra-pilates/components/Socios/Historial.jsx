@@ -20,28 +20,28 @@ export default function Historial({
 
   const getHorarios = async (startDate, endDate) => {
     try {
-      const response = await fetch(`http://localhost:5000/horarios/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          clientId: id,
-          startDate: startDate,
-          endDate: endDate,
-        }),
-      });
+      const response = await fetch(
+        `https://zentra-pilates-production.up.railway.app/horarios/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            clientId: id,
+            startDate: startDate,
+            endDate: endDate,
+          }),
+        }
+      );
 
       const responseJson = await response.json();
       setData(responseJson.data);
       if (responseJson.data.original.length < 1) {
         setHorarioFormated([]);
         setHorario([]);
-        console.log("No hay reservas en el historial con esta fecha");
       } else {
-        console.log(responseJson.data.converted);
-        console.log(responseJson.data.original);
         setHorarioFormated(responseJson.data.converted);
         setHorario(responseJson.data.original);
       }

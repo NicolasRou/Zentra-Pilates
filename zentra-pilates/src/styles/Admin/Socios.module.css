@@ -26,6 +26,7 @@
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   padding: 2%;
   border-radius: 20px;
+  height: 245px;
 }
 .input {
   display: flex;
@@ -63,6 +64,9 @@
   padding: 2%;
   border-radius: 20px;
   width: 60%;
+  height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .results {
   display: flex;

@@ -44,18 +44,21 @@ export default function EliminarAgenda() {
       const diasemana = selectedDay;
 
       console.log(ci, clase, diasemana);
-      const response = await fetch("http://localhost:5000/eliminarClase", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          id: ci,
-          clase: clase,
-          diasemana: diasemana,
-        }),
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/eliminarClase",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            id: ci,
+            clase: clase,
+            diasemana: diasemana,
+          }),
+        }
+      );
 
       const responseJson = await response.json();
       if (responseJson.success === true) {

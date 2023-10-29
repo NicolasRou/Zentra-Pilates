@@ -6,6 +6,7 @@ import { DataSocioProvider } from "@/contexts/dataSocio";
 import InfoBasica from "../../components/Socios/InfoBasica";
 import Historial from "../../components/Socios/Historial";
 import Agenda from "../../components/Socios/Agenda";
+import Loader from "../../components/Socios/Loader";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -24,13 +25,16 @@ export default function Dashboard() {
 
   const getHorarios = async () => {
     try {
-      const response = await fetch("http://localhost:5000/horarios", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/horarios",
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+        }
+      );
       const responseJson = await response.json();
       console.log(responseJson);
       if (response.ok) {
@@ -53,9 +57,9 @@ export default function Dashboard() {
   return (
     <>
       {loading ? (
-        <p>Cargando...</p>
+        <Loader />
       ) : authenticated ? (
-        <DataSocioProvider id={id} refreshData={refreshData} >
+        <DataSocioProvider id={id} refreshData={refreshData}>
           <LayoutSocios
             refreshData={refreshData}
             titleMenu={<h3>Personal</h3>}

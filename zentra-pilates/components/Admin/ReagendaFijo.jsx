@@ -44,6 +44,7 @@ export default function ReagendarFijo() {
     setAvailablehorarios([
       { label: "Selecciona un horario", value: "" },
       { label: "09:00:00", value: "09" },
+      { label: "08:30:00", value: "08" },
       { label: "11:00:00", value: "11" },
       { label: "12:00:00", value: "12" },
       { label: "17:00:00", value: "17" },
@@ -64,19 +65,22 @@ export default function ReagendarFijo() {
       const horaSeleccionada = hora;
       const nuevo_valor = id;
 
-      const response = await fetch("http://localhost:5000/agregarClase", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          clase: clase,
-          dia_semana: dia_semana,
-          hora: horaSeleccionada,
-          nuevo_valor: nuevo_valor,
-        }),
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/agregarClase",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            clase: clase,
+            dia_semana: dia_semana,
+            hora: horaSeleccionada,
+            nuevo_valor: nuevo_valor,
+          }),
+        }
+      );
       const responseJson = await response.json();
       if (responseJson.success === true) {
         swal("Alumno agendado con éxito!", {

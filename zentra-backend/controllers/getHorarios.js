@@ -55,7 +55,7 @@ const getHorariosId = async (req, res, next) => {
     const { startDate, endDate } = req.body;
 
     const horariosId = await db.query(
-      "SELECT fecha FROM horarios WHERE ((alumno1 = $1) or (alumno2 = $1) or (alumno3 = $1)) AND fecha BETWEEN $2 AND $3 order by fecha asc",
+      "SELECT fecha FROM horarios WHERE ((alumno1 = $1) or (alumno2 = $1) or (alumno3 = $1) or (alumno4 = $1) or (alumno5 = $1) or (alumno6 = $1) or (alumno7 = $1) or (alumno8 = $1) or (alumno9 = $1) or (alumno10 = $1) or (alumno11 = $1) or (alumno12 = $1)) AND fecha BETWEEN $2 AND $3 order by fecha asc",
       [clientId, startDate, endDate]
     );
 
@@ -94,6 +94,15 @@ const viewHorarios = async (req, res, next) => {
           (alumno1 <> $1 OR alumno1 IS NULL) AND
           (alumno2 <> $1 OR alumno2 IS NULL) AND
           (alumno3 <> $1 OR alumno3 IS NULL) AND
+          (alumno4 <> $1 OR alumno4 IS NULL) AND
+          (alumno5 <> $1 OR alumno5 IS NULL) AND
+          (alumno6 <> $1 OR alumno6 IS NULL) AND
+          (alumno7 <> $1 OR alumno7 IS NULL) AND
+          (alumno8 <> $1 OR alumno8 IS NULL) AND
+          (alumno9 <> $1 OR alumno9 IS NULL) AND
+          (alumno10 <> $1 OR alumno10 IS NULL) AND
+          (alumno11 <> $1 OR alumno11 IS NULL) AND
+          (alumno12 <> $1 OR alumno12 IS NULL) AND
           clase = $2 AND
           diasemana = $3 AND
           extract(month from fecha) = $4 AND
@@ -151,6 +160,15 @@ const viewNextWeekHorarios = async (req, res, next) => {
         WHERE (alumno1 <> $1 OR alumno1 IS NULL) AND
               (alumno2 <> $1 OR alumno2 IS NULL) AND
               (alumno3 <> $1 OR alumno3 IS NULL) AND
+              (alumno4 <> $1 OR alumno4 IS NULL) AND
+              (alumno5 <> $1 OR alumno5 IS NULL) AND
+              (alumno6 <> $1 OR alumno6 IS NULL) AND
+              (alumno7 <> $1 OR alumno7 IS NULL) AND
+              (alumno8 <> $1 OR alumno8 IS NULL) AND
+              (alumno9 <> $1 OR alumno9 IS NULL) AND
+              (alumno10 <> $1 OR alumno10 IS NULL) AND
+              (alumno11 <> $1 OR alumno11 IS NULL) AND
+              (alumno12 <> $1 OR alumno12 IS NULL) AND
             clase = $2 AND
             fecha >= $3 AND fecha < $4 order by fecha asc`,
       [id, clase, formattedStartDate, formattedEndDate]
@@ -203,9 +221,45 @@ const agendaHora = async (req, res, next) => {
         alumno3 = CASE
           WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NULL THEN $1
           ELSE alumno3
+        END,
+        alumno4 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NULL THEN $1
+          ELSE alumno4
+        END,
+        alumno5 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NULL THEN $1
+          ELSE alumno5
+        END,
+        alumno6 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NULL THEN $1
+          ELSE alumno6
+        END,
+        alumno7 = CASE
+        WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NULL THEN $1
+        ELSE alumno7
+        END,
+        alumno8 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL  AND alumno8 IS NULL THEN $1
+          ELSE alumno8
+        END,
+        alumno9 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NULL THEN $1
+          ELSE alumno9
+        END,
+        alumno10 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NOT NULL AND alumno10 IS NULL THEN $1
+          ELSE alumno10
+        END,
+        alumno11 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NOT NULL AND alumno10 IS NOT NULL AND alumno11 IS NULL THEN $1
+          ELSE alumno11
+        END,
+        alumno12 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NOT NULL AND alumno10 IS NOT NULL AND alumno11 IS NOT NULL AND alumno12 IS NULL THEN $1
+          ELSE alumno12
         END
-      WHERE
-        fecha = $2;
+        WHERE
+          fecha = $2;
     `,
       [id, fecha]
     );
@@ -232,21 +286,55 @@ const replaceHora = async (req, res, next) => {
     const updateQuery = `
       UPDATE horarios
       SET 
-        alumno1 = CASE 
-          WHEN alumno1 IS NULL THEN $1 
-          ELSE alumno1 
+        alumno1 = CASE
+          WHEN alumno1 IS NULL THEN $1
+          ELSE alumno1
         END,
-        
-        alumno2 = CASE 
+        alumno2 = CASE
           WHEN alumno1 IS NOT NULL AND alumno2 IS NULL THEN $1
-          ELSE alumno2 
+          ELSE alumno2
         END,
-        
-        alumno3 = CASE 
+        alumno3 = CASE
           WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NULL THEN $1
-          ELSE alumno3 
+          ELSE alumno3
+        END,
+        alumno4 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NULL THEN $1
+          ELSE alumno4
+        END,
+        alumno5 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NULL THEN $1
+          ELSE alumno5
+        END,
+        alumno6 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NULL THEN $1
+          ELSE alumno6
+        END,
+        alumno7 = CASE
+        WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NULL THEN $1
+        ELSE alumno7
+        END,
+        alumno8 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL  AND alumno8 IS NULL THEN $1
+          ELSE alumno8
+        END,
+        alumno9 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NULL THEN $1
+          ELSE alumno9
+        END,
+        alumno10 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NOT NULL AND alumno10 IS NULL THEN $1
+          ELSE alumno10
+        END,
+        alumno11 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NOT NULL AND alumno10 IS NOT NULL AND alumno11 IS NULL THEN $1
+          ELSE alumno11
+        END,
+        alumno12 = CASE
+          WHEN alumno1 IS NOT NULL AND alumno2 IS NOT NULL AND alumno3 IS NOT NULL AND alumno4 IS NOT NULL AND alumno5 IS NOT NULL AND alumno6 IS NOT NULL AND alumno7 IS NOT NULL AND alumno8 IS NOT NULL AND alumno9 IS NOT NULL AND alumno10 IS NOT NULL AND alumno11 IS NOT NULL AND alumno12 IS NULL THEN $1
+          ELSE alumno12
         END
-      WHERE clase = $2 AND fecha = $3;
+        WHERE clase = $2 AND fecha = $3;
     `;
 
     await db.query(updateQuery, [id, clase, horaSeleccionada]);
@@ -267,6 +355,42 @@ const replaceHora = async (req, res, next) => {
         alumno3 = CASE 
           WHEN fecha = $1 AND alumno3 = $2 THEN NULL
           ELSE alumno3 
+        END,
+        alumno4 = CASE 
+          WHEN fecha = $1 AND alumno4 = $2 THEN NULL
+          ELSE alumno4 
+        END,
+        alumno5 = CASE 
+          WHEN fecha = $1 AND alumno5 = $2 THEN NULL
+          ELSE alumno5 
+        END,
+        alumno6 = CASE 
+          WHEN fecha = $1 AND alumno6 = $2 THEN NULL
+          ELSE alumno6 
+        END,
+        alumno7 = CASE 
+          WHEN fecha = $1 AND alumno7 = $2 THEN NULL
+          ELSE alumno7 
+        END,
+        alumno8 = CASE 
+          WHEN fecha = $1 AND alumno8 = $2 THEN NULL
+          ELSE alumno8 
+        END,
+        alumno9 = CASE 
+          WHEN fecha = $1 AND alumno9 = $2 THEN NULL
+          ELSE alumno9 
+        END,
+        alumno10 = CASE 
+          WHEN fecha = $1 AND alumno10 = $2 THEN NULL
+          ELSE alumno10 
+        END,
+        alumno11 = CASE 
+          WHEN fecha = $1 AND alumno11 = $2 THEN NULL
+          ELSE alumno11 
+        END,
+        alumno12 = CASE 
+          WHEN fecha = $1 AND alumno12 = $2 THEN NULL
+          ELSE alumno12 
         END
       WHERE fecha = $1;
     `;

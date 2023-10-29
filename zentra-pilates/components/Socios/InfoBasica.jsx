@@ -81,7 +81,7 @@ export default function InfoBasica() {
                 <input
                   type="tect"
                   id="Name"
-                  value={dataSocio && dataSocio[0].contacto}
+                  value={`0${dataSocio && dataSocio[0].contacto}`}
                   readOnly
                 />
               </label>

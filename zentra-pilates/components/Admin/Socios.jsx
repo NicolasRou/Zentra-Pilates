@@ -12,8 +12,12 @@ export default function Socios() {
     setInputValue(e.target.value);
   };
   const handleSearch = () => {
-    setIsLoading(true);
-    searchSocio();
+    if (!inputValue.trim()) {
+      alert("Escribe datos del socio que quieres buscar");
+    } else {
+      setIsLoading(true);
+      searchSocio();
+    }
   };
 
   const searchSocio = async () => {
@@ -21,16 +25,19 @@ export default function Socios() {
       const identificador = inputValue;
       console.log(identificador);
 
-      const response = await fetch("http://localhost:5000/buscarSocio/", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          identificador: identificador,
-        }),
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/buscarSocio/",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            identificador: identificador,
+          }),
+        }
+      );
 
       const responseJson = await response.json();
       setData(responseJson.data);
@@ -76,7 +83,9 @@ export default function Socios() {
               {data.map((socio, index) => (
                 <div key={index} className={styles.results}>
                   <p>{socio.nombre}</p>
-                  <Link href={`/editar/${socio.ci}`} className={styles.button}>Editar</Link>
+                  <Link href={`/editar/${socio.ci}`} className={styles.button}>
+                    Editar
+                  </Link>
                 </div>
               ))}
             </div>

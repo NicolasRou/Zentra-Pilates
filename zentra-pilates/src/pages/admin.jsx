@@ -4,8 +4,10 @@ import LayoutSocios from "../../components/Socios/LayoutSocios";
 import Clases from "../../components/Admin/Clases";
 import Socios from "../../components/Admin/Socios";
 import Loader from "../../components/Socios/Loader";
+import { useRouter } from "next/router";
 
 export default function Admin() {
+  const router = useRouter();
   const [authenticated, setAuthenticated] = useState(false);
   const [refreshComponent, setRefreshComponent] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,13 +22,16 @@ export default function Admin() {
 
   const getHorarios = async () => {
     try {
-      const response = await fetch("http://localhost:5000/horarios", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/horarios",
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+        }
+      );
       if (response.ok) {
         setAuthenticated(true);
         setIsLoading(false);
@@ -46,6 +51,7 @@ export default function Admin() {
         icon: "error",
         button: "Ok",
       });
+      router.push("/login");
       return;
     }
   };

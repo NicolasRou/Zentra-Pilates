@@ -77,18 +77,21 @@ export default function Agenda() {
       console.log(diasemana);
       console.log(clase);
       console.log(mes);
-      const response = await fetch(`http://localhost:5000/horas/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          clase: clase,
-          diasemana: diasemana,
-          mes: mes,
-        }),
-      });
+      const response = await fetch(
+        `https://zentra-pilates-production.up.railway.app/horas/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            clase: clase,
+            diasemana: diasemana,
+            mes: mes,
+          }),
+        }
+      );
 
       const responseJson = await response.json();
       console.log(responseJson);
@@ -146,18 +149,21 @@ export default function Agenda() {
           const horaSeleciconada = replaceHorario[index];
           console.log(horaActual);
           console.log(horaSeleciconada);
-          const data = await fetch(`http://localhost:5000/replace/${id}`, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-              "auth-token": localStorage.getItem("jwt"),
-            },
-            body: JSON.stringify({
-              clase: clase,
-              horaActual: horaActual,
-              horaSeleccionada: horaSeleciconada,
-            }),
-          });
+          const data = await fetch(
+            `https://zentra-pilates-production.up.railway.app/replace/${id}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json",
+                "auth-token": localStorage.getItem("jwt"),
+              },
+              body: JSON.stringify({
+                clase: clase,
+                horaActual: horaActual,
+                horaSeleccionada: horaSeleciconada,
+              }),
+            }
+          );
           const dataJson = await data.json();
           console.log(dataJson);
 
@@ -178,16 +184,19 @@ export default function Agenda() {
     try {
       const selectedDate = horarioDelete;
       console.log(selectedHorario);
-      const deleteDate = await fetch(`http://localhost:5000/delete/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          selectedDate: selectedDate,
-        }),
-      });
+      const deleteDate = await fetch(
+        `https://zentra-pilates-production.up.railway.app/delete/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            selectedDate: selectedDate,
+          }),
+        }
+      );
 
       const deleteDateJson = await deleteDate.json();
 

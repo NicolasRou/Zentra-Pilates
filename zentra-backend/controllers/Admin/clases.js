@@ -85,12 +85,14 @@ const claseSocio = async (req, res) => {
       clase.rows.map((row) => row.fecha),
       timeZoneOffset
     );
-
-    res.status(200).json({
-      success: true,
-      data: horarios,
-      message: "Horarios obtenidos",
-    });
+    req.setLocale("es");
+    res.send(
+      res.__res.status(200).json({
+        success: true,
+        data: horarios,
+        message: "Horarios obtenidos",
+      })
+    );
   } catch (error) {
     console.error("Error en la consulta SQL:", error);
     res.status(500).json({

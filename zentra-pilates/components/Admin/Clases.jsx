@@ -12,7 +12,7 @@ export default function Clases() {
   const [showResults, setShowResults] = useState(false);
   const [clase, setClase] = useState("");
   const [alumnos, setAlumnos] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleDateChange = (event) => {
     const selectedDate = event.target.value;
@@ -33,6 +33,7 @@ export default function Clases() {
     } else {
       setAvailablehorarios([
         "Selecciona un horario",
+        "08:30:00",
         "09:00:00",
         "17:00:00",
         "18:30:00",
@@ -53,17 +54,23 @@ export default function Clases() {
     try {
       const fecha = dateTime;
       console.log(fecha);
-      const response = await fetch("http://localhost:5000/clases", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          fecha: fecha,
-        }),
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/clases",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            fecha: fecha,
+          }),
+        }
+      );
 
+      if (response.ok) {
+        setIsLoading(false);
+      }
       const responseJson = await response.json();
       console.log(responseJson);
       const data = responseJson.data[0];
@@ -139,14 +146,23 @@ export default function Clases() {
             <div>
               <h3 className={styles.subtitle}>Alumnos agendados:</h3>
               <ul className={styles.list}>
-                {alumnos
-                  .filter((alumno) => alumno && alumno.nombre)
-                  .map((alumno, index) => (
-                    <li key={index}>
-                      <p>{alumno.nombre}</p>
-                      <button onClick={() => handleVerSocio(alumno.ci)} className={styles.button}>Ver socio</button>
-                    </li>
-                  ))}
+                {alumnos ? (
+                  alumnos
+                    .filter((alumno) => alumno && alumno.nombre)
+                    .map((alumno, index) => (
+                      <li key={index}>
+                        <p>{alumno.nombre}</p>
+                        <button
+                          onClick={() => handleVerSocio(alumno.ci)}
+                          className={styles.button}
+                        >
+                          Ver socio
+                        </button>
+                      </li>
+                    ))
+                ) : (
+                  <p>No hay alumnos agendados para esta fecha</p>
+                )}
               </ul>
             </div>
           </div>

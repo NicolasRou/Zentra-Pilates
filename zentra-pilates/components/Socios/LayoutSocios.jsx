@@ -23,7 +23,8 @@ export default function LayoutSocios({
   titleTab2,
   titleTab3,
 }) {
-  const { nombre } = useContext(DataSocioContext) || { nombre: "" };;
+  const { nombre } = useContext(DataSocioContext) || { nombre: "" };
+  const { comentarios } = useContext(DataSocioContext) || { comentarios: "" };
   const router = useRouter();
   const handleLogout = () => {
     localStorage.removeItem("jwt");
@@ -108,6 +109,7 @@ export default function LayoutSocios({
           </div>
           <div className={styles.panel_contain}>
             <h3>Hola! {nombre} bienvenid@ a tu panel de control</h3>
+            <p>{comentarios}</p>
           </div>
         </div>
       </div>
