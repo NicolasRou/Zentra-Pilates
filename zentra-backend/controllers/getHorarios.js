@@ -1,8 +1,7 @@
 const db = require("../db/index");
 
-const dateConvert = (dates, timeZoneOffset) => {
+const dateConvert = (dates) => {
   return dates.map((date) => {
-    const fechaObj = new Date(date);
     const options = {
       timeZone: "America/Montevideo",
       year: "numeric",
@@ -13,7 +12,10 @@ const dateConvert = (dates, timeZoneOffset) => {
       second: "numeric",
       weekday: "long",
     };
+
+    const fechaObj = new Date(date);
     const fechaLocal = fechaObj.toLocaleString("es-ES", options);
+
     return fechaLocal;
   });
 };
