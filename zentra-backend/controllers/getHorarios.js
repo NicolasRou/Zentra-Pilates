@@ -13,7 +13,13 @@ const dateConvert = (dates) => {
       weekday: "long",
     };
 
-    const fechaObj = new Date(date);
+    // Convertir la fecha a UTC
+    const fechaUTC = new Date(date).toISOString();
+
+    // Crear un nuevo objeto de fecha con la fecha UTC
+    const fechaObj = new Date(fechaUTC);
+
+    // Convertir la fecha UTC a la zona horaria deseada
     const fechaLocal = fechaObj.toLocaleString("es-ES", options);
 
     return fechaLocal;
