@@ -48,7 +48,7 @@ export default function ClasesSocio() {
         <ul>
           {dataClase.map((clase, index) => (
             <li key={index}>
-              <p>{clase.fecha}</p>
+              <p>{clase}</p>
             </li>
           ))}
         </ul>

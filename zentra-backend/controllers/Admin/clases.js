@@ -80,10 +80,7 @@ const claseSocio = async (req, res) => {
       [id]
     );
 
-    const horarios = dateConvert(
-      clase.rows.map((row) => row.fecha)
-    
-    );
+    const horarios = dateConvert(clase.rows.map((row) => row.fecha));
     res.status(200).json({
       success: true,
       data: horarios,
@@ -136,26 +133,38 @@ const eliminarClase = async (req, res) => {
   }
 };
 
+
 const agregarClase = async (req, res) => {
   try {
-    const { clase, dia_semana, hora, nuevo_valor } = req.body;
+    const { new_value, clase_filter, diasemana_filter, hora_filter } = req.body;
 
-    const agregar = await db.query(
-      `
-    SELECT actualizar_alumno($1, $2, $3, $4)
-    `,
-      [clase, dia_semana, hora, nuevo_valor]
-    );
+    const query = `
+      UPDATE horarios h
+      SET alumno1 = $1
+      FROM horarios h2
+      WHERE h.clase = $2
+        AND h.diasemana = $3
+        AND EXTRACT(HOUR FROM h.fecha) = $4
+        AND h.alumno1 IS NULL
+        AND NOT EXISTS (
+            SELECT 1 FROM horarios h3
+            WHERE h3.clase = h.clase
+              AND h3.diasemana = h.diasemana
+              AND EXTRACT(HOUR FROM h3.fecha) = EXTRACT(HOUR FROM h.fecha)
+              AND (alumno2 = $1 OR alumno3 = $1 OR alumno4 = $1 OR alumno5 = $1 OR alumno6 = $1 OR alumno7 = $1 OR alumno8 = $1 OR alumno9 = $1 OR alumno10 = $1 OR alumno11 = $1 OR alumno12 = $1)
+        )
+    `;
+
+    const response = await db.query(query, [new_value, clase_filter, diasemana_filter, hora_filter]);
 
     res.status(200).json({
       message: "Alumno actualizado exitosamente",
-      data: agregar.rows[0],
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: "Error al actualizar el alumno",
     });
   }
 };
-
 module.exports = { getClases, eliminarClase, agregarClase, claseSocio };
