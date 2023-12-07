@@ -13,8 +13,8 @@ export default function ReagendarFijo() {
   const [enabledDays, setEnabledDays] = useState([]);
 
   const clases = [
-    { value: "Pilates", days: [1, 2, 3, 4, 5, 6] },
-    { value: "Pilates stretching", days: [5, 6] },
+    { value: "Pilates", days: [1, 2, 3, 4, 5] },
+    { value: "Pilates stretching", days: [4, 5, 6] },
     { value: "Pilates funcional", days: [5] },
     { value: "TRX pilates", days: [1, 2, 4, 5] },
     { value: "Stretching", days: [1, 2, 6] },
@@ -45,7 +45,6 @@ export default function ReagendarFijo() {
       { label: "Selecciona un horario", value: "" },
       { label: "09:00:00", value: "09" },
       { label: "08:30:00", value: "08" },
-      { label: "11:00:00", value: "11" },
       { label: "12:00:00", value: "12" },
       { label: "17:00:00", value: "17" },
       { label: "18:30:00", value: "18" },
@@ -74,18 +73,28 @@ export default function ReagendarFijo() {
             "auth-token": localStorage.getItem("jwt"),
           },
           body: JSON.stringify({
-            clase: clase,
-            dia_semana: dia_semana,
-            hora: horaSeleccionada,
-            nuevo_valor: nuevo_valor,
+            clase_filter: clase,
+            diasemana_filter: dia_semana,
+            hora_filter: horaSeleccionada,
+            new_value: nuevo_valor,
           }),
         }
       );
       const responseJson = await response.json();
+      console.log(responseJson);
+
       if (responseJson.success === true) {
         swal("Alumno agendado con éxito!", {
           buttons: false,
           timer: 1000,
+        });
+      } else {
+        // Mostrar una alerta en caso de que la respuesta del servidor no tenga success: true
+        swal({
+          title: "Error",
+          text: "No se ha podido agendar al alumno",
+          icon: "error",
+          button: "Ok",
         });
       }
     } catch (error) {

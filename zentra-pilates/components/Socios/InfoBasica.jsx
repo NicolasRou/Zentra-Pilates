@@ -23,12 +23,19 @@ export default function InfoBasica() {
     return <Loader />;
   }
 
-  const changeDateFormat = (dateString) => {
-    const [day, month, year] = dateString.split("/");
-    return `${year}-${month}-${day}`;
-  };
+  if (dataSocio[0].plan != "administrador") {
+    const changeDateFormat = (dateString) => {
+      const [day, month, year] = dateString.split("/");
+      return `${year}-${month}-${day}`;
+    };
+  }
 
-  const dateFormated = changeDateFormat(dataSocio[0].fechanacimiento);
+  // const changeDateFormat = (dateString) => {
+  //   const [day, month, year] = dateString.split("/");
+  //   return `${year}-${month}-${day}`;
+  // };
+
+  // const dateFormated = changeDateFormat(dataSocio[0].fechanacimiento);
 
   return (
     <div className={styles.container_info}>
@@ -69,7 +76,7 @@ export default function InfoBasica() {
                 <input
                   type="date"
                   id="nacimiento"
-                  value={dataSocio && dateFormated}
+                  value={dataSocio }
                   readOnly
                 />
               </label>

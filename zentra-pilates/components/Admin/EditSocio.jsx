@@ -101,14 +101,17 @@ export default function EditSocio() {
         },
       };
       console.log(campo, nuevoValor, ci);
-      const response = await fetch("https://zentra-pilates-production.up.railway.app/editSocio", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        "https://zentra-pilates-production.up.railway.app/editSocio",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
       if (response.ok) {
         swal("Socio modificado con éxito!", {
           buttons: false,
@@ -178,8 +181,26 @@ export default function EditSocio() {
           </div>
           <div>
             <label className={styles.label_input}>
+              Estado:
+              {edicion.estado ? (
+                <input
+                  type="text"
+                  value={datos.estado}
+                  onChange={(e) => handlechange("estado", e.target.value)}
+                />
+              ) : (
+                <input type="text" value={datos.estado} disabled />
+              )}
+              <button onClick={() => handleEditar("estado")}>Editar</button>
+              {edicion.estado && (
+                <button onClick={() => handleGuardar("estado")}>Guardar</button>
+              )}
+            </label>
+          </div>
+          <div>
+            <label className={styles.label_input}>
               Contraseña:
-              {edicion.campo2 ? (
+              {edicion.pass ? (
                 <input
                   type="text"
                   value={datos.pass}
@@ -398,24 +419,7 @@ export default function EditSocio() {
               )}
             </label>
           </div>
-          <div>
-            <label className={styles.label_input}>
-              Estado:
-              {edicion.estado ? (
-                <input
-                  type="text"
-                  value={datos.estado}
-                  onChange={(e) => handlechange("estado", e.target.value)}
-                />
-              ) : (
-                <input type="text" value={datos.estado} disabled />
-              )}
-              <button onClick={() => handleEditar("estado")}>Editar</button>
-              {edicion.estado && (
-                <button onClick={() => handleGuardar("estado")}>Guardar</button>
-              )}
-            </label>
-          </div>
+
           <div>
             <label className={styles.label_input}>
               Pago:

@@ -38,7 +38,7 @@ export default function Planes() {
               <p>Stretching</p>
               <p>Yoga</p>
               <div className={styles.container__link}>
-                <Link href="/#contacta" className={styles.link}>
+                <Link href="/inscripcion" className={styles.link}>
                   INSCRIBIRME
                 </Link>
               </div>
@@ -52,7 +52,7 @@ export default function Planes() {
               <p>Stretching</p>
               <p>Yoga</p>
               <div className={styles.container__link}>
-                <Link href="/#contacta" className={styles.link}>
+                <Link href="/inscripcion" className={styles.link}>
                   INSCRIBIRME
                 </Link>
               </div>
@@ -66,7 +66,7 @@ export default function Planes() {
               <p>Stretching</p>
               <p>Yoga</p>
               <div className={styles.container__link}>
-                <Link href="/#contacta" className={styles.link}>
+                <Link href="/inscripcion" className={styles.link}>
                   INSCRIBIRME
                 </Link>
               </div>

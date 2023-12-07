@@ -63,7 +63,7 @@ export default function ClaseSelector({
   }, []);
 
   const clases = [
-    { value: "Pilates", days: [1, 2, 3, 4, 5, 6] },
+    { value: "Pilates", days: [1, 2, 3, 4, 5] },
     { value: "Pilates stretching", days: [4, 5, 6] },
     { value: "Pilates funcional", days: [5] },
     { value: "TRX pilates", days: [1, 2, 4, 5] },

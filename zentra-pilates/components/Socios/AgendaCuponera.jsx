@@ -19,8 +19,8 @@ export default function AgendaCuponera() {
   };
 
   const clases = [
-    { value: "Pilates", days: [1, 2, 3, 4, 5, 6] },
-    { value: "Pilates stretching", days: [5, 6] },
+    { value: "Pilates", days: [1, 2, 3, 4, 5] },
+    { value: "Pilates stretching", days: [4, 5, 6] },
     { value: "Pilates funcional", days: [5] },
     { value: "Pilates TRX", days: [2] },
     { value: "TRX", days: [1] },
