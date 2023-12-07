@@ -159,6 +159,7 @@ const agregarClase = async (req, res) => {
 
     res.status(200).json({
       message: "Alumno actualizado exitosamente",
+      success: true,
     });
   } catch (error) {
     console.log(error);
