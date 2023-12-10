@@ -72,7 +72,7 @@ const claseSocio = async (req, res) => {
   try {
     const { id } = req.body;
     const clase = await db.query(
-      `SELECT fecha
+      `SELECT fecha, clase
       FROM horarios
       WHERE fecha >= current_date - interval '1 month' AND fecha <= current_date
       AND (alumno1 = $1 OR alumno2 = $1 OR alumno3 = $1 OR alumno4 = $1 OR alumno5 = $1 OR alumno6 = $1 OR alumno7 = $1 OR alumno8 = $1 OR alumno9 = $1 OR alumno10 = $1 OR alumno11 = $1 OR alumno12 = $1)
@@ -81,9 +81,10 @@ const claseSocio = async (req, res) => {
     );
 
     const horarios = dateConvert(clase.rows.map((row) => row.fecha));
+    const clases = clase.rows.map((row)=> row.clase)
     res.status(200).json({
       success: true,
-      data: horarios,
+      data: {horarios, clases},
       message: "Horarios obtenidos",
     });
   } catch (error) {
@@ -136,23 +137,6 @@ const eliminarClase = async (req, res) => {
 const agregarClase = async (req, res) => {
   try {
     const { new_value, clase_filter, diasemana_filter, hora_filter } = req.body;
-
-    // const query = `
-    //   UPDATE horarios h
-    //   SET alumno1 = $1
-    //   FROM horarios h2
-    //   WHERE h.clase = $2
-    //     AND h.diasemana = $3
-    //     AND EXTRACT(HOUR FROM h.fecha) = $4
-    //     AND h.alumno1 IS NULL
-    //     AND NOT EXISTS (
-    //         SELECT 1 FROM horarios h3
-    //         WHERE h3.clase = h.clase
-    //           AND h3.diasemana = h.diasemana
-    //           AND EXTRACT(HOUR FROM h3.fecha) = EXTRACT(HOUR FROM h.fecha)
-    //           AND (alumno2 = $1 OR alumno3 = $1 OR alumno4 = $1 OR alumno5 = $1 OR alumno6 = $1 OR alumno7 = $1 OR alumno8 = $1 OR alumno9 = $1 OR alumno10 = $1 OR alumno11 = $1 OR alumno12 = $1)
-    //     )
-    // `;
 
     const query = `
     UPDATE horarios h
