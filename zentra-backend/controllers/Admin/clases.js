@@ -133,29 +133,61 @@ const eliminarClase = async (req, res) => {
   }
 };
 
-
 const agregarClase = async (req, res) => {
   try {
     const { new_value, clase_filter, diasemana_filter, hora_filter } = req.body;
 
-    const query = `
-      UPDATE horarios h
-      SET alumno1 = $1
-      FROM horarios h2
-      WHERE h.clase = $2
-        AND h.diasemana = $3
-        AND EXTRACT(HOUR FROM h.fecha) = $4
-        AND h.alumno1 IS NULL
-        AND NOT EXISTS (
-            SELECT 1 FROM horarios h3
-            WHERE h3.clase = h.clase
-              AND h3.diasemana = h.diasemana
-              AND EXTRACT(HOUR FROM h3.fecha) = EXTRACT(HOUR FROM h.fecha)
-              AND (alumno2 = $1 OR alumno3 = $1 OR alumno4 = $1 OR alumno5 = $1 OR alumno6 = $1 OR alumno7 = $1 OR alumno8 = $1 OR alumno9 = $1 OR alumno10 = $1 OR alumno11 = $1 OR alumno12 = $1)
-        )
-    `;
+    // const query = `
+    //   UPDATE horarios h
+    //   SET alumno1 = $1
+    //   FROM horarios h2
+    //   WHERE h.clase = $2
+    //     AND h.diasemana = $3
+    //     AND EXTRACT(HOUR FROM h.fecha) = $4
+    //     AND h.alumno1 IS NULL
+    //     AND NOT EXISTS (
+    //         SELECT 1 FROM horarios h3
+    //         WHERE h3.clase = h.clase
+    //           AND h3.diasemana = h.diasemana
+    //           AND EXTRACT(HOUR FROM h3.fecha) = EXTRACT(HOUR FROM h.fecha)
+    //           AND (alumno2 = $1 OR alumno3 = $1 OR alumno4 = $1 OR alumno5 = $1 OR alumno6 = $1 OR alumno7 = $1 OR alumno8 = $1 OR alumno9 = $1 OR alumno10 = $1 OR alumno11 = $1 OR alumno12 = $1)
+    //     )
+    // `;
 
-    const response = await db.query(query, [new_value, clase_filter, diasemana_filter, hora_filter]);
+    const query = `
+    UPDATE horarios h
+    SET 
+  alumno1 = COALESCE(h.alumno1, $1),
+  alumno2 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NULL AND $1 NOT IN (h.alumno1) THEN $1 ELSE h.alumno2 END,
+  alumno3 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2) THEN $1 ELSE h.alumno3 END,
+  alumno4 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3) THEN $1 ELSE h.alumno4 END,
+  alumno5 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4) THEN $1 ELSE h.alumno5 END,
+  alumno6 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NOT NULL AND h.alumno6 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4, h.alumno5) THEN $1 ELSE h.alumno6 END,
+  alumno7 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NOT NULL AND h.alumno6 IS NOT NULL AND h.alumno7 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4, h.alumno5, h.alumno6) THEN $1 ELSE h.alumno7 END,
+  alumno8 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NOT NULL AND h.alumno6 IS NOT NULL AND h.alumno7 IS NOT NULL AND h.alumno8 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4, h.alumno5, h.alumno6, h.alumno7) THEN $1 ELSE h.alumno8 END,
+  alumno9 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NOT NULL AND h.alumno6 IS NOT NULL AND h.alumno7 IS NOT NULL AND h.alumno8 IS NOT NULL AND h.alumno9 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4, h.alumno5, h.alumno6, h.alumno7, h.alumno8) THEN $1 ELSE h.alumno9 END,
+  alumno10 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NOT NULL AND h.alumno6 IS NOT NULL AND h.alumno7 IS NOT NULL AND h.alumno8 IS NOT NULL AND h.alumno9 IS NOT NULL AND h.alumno10 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4, h.alumno5, h.alumno6, h.alumno7, h.alumno8, h.alumno9) THEN $1 ELSE h.alumno10 END,
+  alumno11 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NOT NULL AND h.alumno6 IS NOT NULL AND h.alumno7 IS NOT NULL AND h.alumno8 IS NOT NULL AND h.alumno9 IS NOT NULL AND h.alumno10 IS NOT NULL AND h.alumno11 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4, h.alumno5, h.alumno6, h.alumno7, h.alumno8, h.alumno9, h.alumno10) THEN $1 ELSE h.alumno11 END,
+  alumno12 = CASE WHEN h.alumno1 IS NOT NULL AND h.alumno2 IS NOT NULL AND h.alumno3 IS NOT NULL AND h.alumno4 IS NOT NULL AND h.alumno5 IS NOT NULL AND h.alumno6 IS NOT NULL AND h.alumno7 IS NOT NULL AND h.alumno8 IS NOT NULL AND h.alumno9 IS NOT NULL AND h.alumno10 IS NOT NULL AND h.alumno11 IS NOT NULL AND h.alumno12 IS NULL AND $1 NOT IN (h.alumno1, h.alumno2, h.alumno3, h.alumno4, h.alumno5, h.alumno6, h.alumno7, h.alumno8, h.alumno9, h.alumno10, h.alumno11) THEN $1 ELSE h.alumno12 END
+    WHERE h.clase = $2
+      AND h.diasemana = $3
+      AND EXTRACT(HOUR FROM h.fecha) = $4
+      AND (h.alumno1 IS NULL OR h.alumno2 IS NULL OR h.alumno3 IS NULL OR h.alumno4 IS NULL OR h.alumno5 IS NULL OR h.alumno6 IS NULL OR h.alumno7 IS NULL OR h.alumno8 IS NULL OR h.alumno9 IS NULL OR h.alumno10 IS NULL OR h.alumno11 IS NULL OR h.alumno12 IS NULL)
+      AND NOT EXISTS (
+          SELECT 1 FROM horarios h3
+          WHERE h3.clase = h.clase
+            AND h3.diasemana = h.diasemana
+            AND EXTRACT(HOUR FROM h3.fecha) = EXTRACT(HOUR FROM h.fecha)
+            AND (alumno2 = $1 OR alumno3 = $1 OR alumno4 = $1 OR alumno5 = $1 OR alumno6 = $1 OR alumno7 = $1 OR alumno8 = $1 OR alumno9 = $1 OR alumno10 = $1 OR alumno11 = $1 OR alumno12 = $1)
+      );
+      `;
+
+    const response = await db.query(query, [
+      new_value,
+      clase_filter,
+      diasemana_filter,
+      hora_filter,
+    ]);
 
     res.status(200).json({
       message: "Alumno actualizado exitosamente",
@@ -165,6 +197,7 @@ const agregarClase = async (req, res) => {
     console.log(error);
     res.status(500).json({
       message: "Error al actualizar el alumno",
+      error: error.message,
     });
   }
 };
