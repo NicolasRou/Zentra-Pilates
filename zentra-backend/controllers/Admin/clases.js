@@ -75,7 +75,7 @@ const claseSocio = async (req, res) => {
       `SELECT fecha
       FROM horarios
       WHERE fecha >= current_date - interval '1 month' AND fecha <= current_date
-      AND (alumno1 = $1 OR alumno2 = $1 OR alumno3 = $1)
+      AND (alumno1 = $1 OR alumno2 = $1 OR alumno3 = $1 OR alumno4 = $1 OR alumno5 = $1 OR alumno6 = $1 OR alumno7 = $1 OR alumno8 = $1 OR alumno9 = $1 OR alumno10 = $1 OR alumno11 = $1 OR alumno12 = $1)
       ORDER BY fecha ASC;`,
       [id]
     );
