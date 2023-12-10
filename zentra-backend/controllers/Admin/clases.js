@@ -81,10 +81,10 @@ const claseSocio = async (req, res) => {
     );
 
     const horarios = dateConvert(clase.rows.map((row) => row.fecha));
-    const clases = clase.rows.map((row)=> row.clase)
+    const clases = clase.rows.map((row) => row.clase);
     res.status(200).json({
       success: true,
-      data: {horarios, clases},
+      data: { horarios, clases },
       message: "Horarios obtenidos",
     });
   } catch (error) {
@@ -116,7 +116,43 @@ const eliminarClase = async (req, res) => {
       alumno3 = CASE
         WHEN alumno3 = $1 THEN null
         ELSE alumno3
-      end
+      END,
+      alumno4 = CASE
+        WHEN alumno4 = $1 THEN null
+        ELSE alumno4
+      END,
+        alumno5 = CASE
+        WHEN alumno5 = $1 THEN null
+      ELSE alumno5
+      END,
+        alumno6 = CASE
+        WHEN alumno6 = $1 THEN null
+      ELSE alumno6
+      END,
+        alumno7 = CASE
+        WHEN alumno7 = $1 THEN null
+      ELSE alumno7
+      END,
+      alumno8 = CASE
+        WHEN alumno8 = $1 THEN null
+        ELSE alumno8
+      END,
+        alumno9 = CASE
+        WHEN alumno9 = $1 THEN null
+      ELSE alumno9
+      END,
+        alumno10 = CASE
+        WHEN alumno10 = $1 THEN null
+      ELSE alumno10
+      END,
+        alumno11 = CASE
+        WHEN alumno11 = $1 THEN null
+      ELSE alumno11
+      END,
+        alumno12 = CASE
+        WHEN alumno12 = $1 THEN null
+      ELSE alumno12
+      END
       where clase = $2 and diasemana = $3`,
       [id, clase, diasemana]
     );
@@ -125,6 +161,11 @@ const eliminarClase = async (req, res) => {
       success: true,
       message: "Alumno eliminado en horario seleccionado",
     });
+
+    if (eliminar.rowCount === 0) {
+      res.status(500).json({message: "No se ha podido eliminar al alumno"})
+    }
+    
   } catch (error) {
     res.status(500).json({
       success: false,
