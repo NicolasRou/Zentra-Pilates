@@ -97,6 +97,15 @@ export default function ReagendarFijo() {
           button: "Ok",
         });
       }
+
+      if (responseJson.data === 0) {
+        swal({
+          title: "Error",
+          text: "No hay lugar para la clase seleccionada",
+          icon: "error",
+          button: "Ok",
+        });
+      }
     } catch (error) {
       console.log("Error:", error);
       swal({

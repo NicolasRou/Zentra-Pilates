@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import ClaseSelector from "./ClaseSelector";
 import styles from "@/styles/Socios/AgendaCuponera.module.css";
 import { useRouter } from "next/router";
+import Loader from "./Loader";
 
 export default function AgendaCuponera() {
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedClase, setSelectedClase] = useState(null);
   const [enabledDays, setEnabledDays] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
   const [dateAvailable, setDateAvailable] = useState("");
   const [hourAvailable, setHourAvailable] = useState("");
   const [data, setData] = useState([]);
@@ -74,15 +74,16 @@ export default function AgendaCuponera() {
     }
   };
 
-  const selectDate = (dateAvailable) => {
-    agendaHora(dateAvailable);
-  };
-
-  const agendaHora = async (dateAvailable) => {
+  const selectDate = async (dateAvailable) => {
     try {
       const idSocio = id;
-      const fecha = dateAvailable;
-      console.log(fecha);
+      if (!dateAvailable || typeof dateAvailable !== "string") {
+        console.error("Error: Fecha no válida");
+        return;
+      }
+
+      const fecha = formatDate(dateAvailable);
+      console.log("Fecha formateada:", fecha);
 
       const response = await fetch(`http://localhost:5000/agendar/${id}`, {
         method: "POST",
@@ -96,13 +97,48 @@ export default function AgendaCuponera() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`Error al agendar la clase: ${response.statusText}`);
+      }
+
       const responseJson = await response.json();
       console.log(responseJson);
       console.log("Agendado con exito");
     } catch (error) {
-      console.log("No se ha podido agendar la clase");
+      console.error("Error al agendar la clase:", error);
     }
   };
+
+  const formatDate = (inputDateString) => {
+    console.log("inputDateString en formatDate:", inputDateString);
+    // Obtén los componentes de la fecha de la cadena de entrada
+    if (!inputDateString) {
+      console.error("Error: inputDateString is undefined or null");
+      return null; // Otra acción adecuada en tu caso
+    }
+    const dateComponents = inputDateString.split(", ")[1]?.split("/");
+    if (!dateComponents || dateComponents.length !== 3) {
+      console.error(
+        "Error: dateComponents is undefined or has incorrect format"
+      );
+      return null; // Otra acción adecuada en tu caso
+    }
+    const year = dateComponents[2];
+    const month = dateComponents[1];
+    const day = dateComponents[0];
+
+    // Formatea la cadena de fecha en el formato deseado (YYYY-MM-DD)
+    const formattedDate = `${year}-${month}-${day}`;
+
+    // Obtén la hora de la cadena de entrada
+    const time = inputDateString.split(", ")[2];
+
+    // Formatea la cadena completa en el formato final (YYYY-MM-DDTHH:mm:ss)
+    const finalFormattedDate = `${formattedDate}T${time}:00`;
+
+    return finalFormattedDate;
+  };
+
   return (
     <div>
       <div className={styles.container_text}>
@@ -115,7 +151,7 @@ export default function AgendaCuponera() {
           </h3>
           <p>
             Recordá que para poder agendar a una clase, debe ser mínimo con 24hs
-            de antelación, y como máximo una semana antes de la clase.
+            de antelación, y como maximo podés agendar hasta el próximo sábado.
           </p>
         </div>
       </div>
@@ -140,7 +176,7 @@ export default function AgendaCuponera() {
           {data && data.original && data.original.length > 0 ? (
             <div className={styles.container_resultados}>
               <h4>Aquí estan los resultados</h4>
-              {data.converted.map((hora, index) => (
+              {data.original.map((hora, index) => (
                 <li key={index} className={styles.li}>
                   <input
                     type="text"
@@ -149,7 +185,9 @@ export default function AgendaCuponera() {
                   />
                   <button
                     onClick={() => {
-                      selectDate(dateAvailable[index]);
+                      if (data && data.original && data.original.length > 0) {
+                        selectDate(data.original[index]);
+                      }
                     }}
                   >
                     Agendar

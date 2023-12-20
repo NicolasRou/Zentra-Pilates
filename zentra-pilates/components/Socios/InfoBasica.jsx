@@ -74,9 +74,9 @@ export default function InfoBasica() {
                 {" "}
                 Fecha de nacimiento
                 <input
-                  type="date"
+                  type="text"
                   id="nacimiento"
-                  value={dataSocio }
+                  value={dataSocio && dataSocio[0].fechanacimiento}
                   readOnly
                 />
               </label>

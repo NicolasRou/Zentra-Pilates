@@ -20,8 +20,8 @@ export default function Agenda() {
   const [selectedMonth, setSelectedMonth] = useState(0);
   const [enabledDays, setEnabledDays] = useState([]);
   const [showResults, setShowResults] = useState(false);
-  const [searchHorarios, setSearchHorarios] = useState([]);
-  const [replaceHorario, setReplaceHorario] = useState("");
+  const [searchHorarioConverted, setSearchHorarioConverted] = useState([]);
+  const [searchHorarioOriginal, setSearchHorarioOriginal] = useState("");
   const router = useRouter();
   const { id } = router.query;
 
@@ -77,28 +77,22 @@ export default function Agenda() {
       console.log(diasemana);
       console.log(clase);
       console.log(mes);
-      const response = await fetch(
-        `https://zentra-pilates-production.up.railway.app/horas/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            "auth-token": localStorage.getItem("jwt"),
-          },
-          body: JSON.stringify({
-            clase: clase,
-            diasemana: diasemana,
-            mes: mes,
-          }),
-        }
-      );
-
+      const response = await fetch(`http://localhost:5000/horas/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "auth-token": localStorage.getItem("jwt"),
+        },
+        body: JSON.stringify({
+          clase: clase,
+          diasemana: diasemana,
+          mes: mes,
+        }),
+      });
       const responseJson = await response.json();
       console.log(responseJson);
-      setSearchHorarios(responseJson.data.converted);
-      setReplaceHorario(responseJson.data.original);
-      console.log(replaceHorario);
-      console.log(searchHorarios);
+      setSearchHorarioConverted(responseJson.data.converted);
+      setSearchHorarioOriginal(responseJson.data.original);
     } catch (error) {
       console.log("Error al obtener los horarios libres");
     }
@@ -106,9 +100,31 @@ export default function Agenda() {
 
   const handleEdit = (horario, horarioFormated) => {
     setSelectedHorario(horarioFormated);
-    setHorario(horario);
+    const formattedHorario = fechadb(horario);
+    setHorario(formattedHorario);
     setModalType("edit");
     console.log(horario);
+  };
+
+  const fechadb = (date) => {
+    const fechaObj = new Date(date);
+    if (isNaN(fechaObj.getTime())) {
+      console.error("Fecha no válida:", date);
+      return null;
+    }
+    // fechaObj.setUTCHours(fechaObj.getUTCHours() + 3);
+    fechaObj.setMinutes(fechaObj.getMinutes() - fechaObj.getTimezoneOffset());
+  
+
+    const year = fechaObj.getUTCFullYear();
+    const month = String(fechaObj.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(fechaObj.getUTCDate()).padStart(2, "0");
+    const hours = String(fechaObj.getUTCHours()).padStart(2, "0");
+    const minutes = String(fechaObj.getUTCMinutes()).padStart(2, "0");
+    const seconds = String(fechaObj.getUTCSeconds()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return formattedDate;
   };
 
   const handleDelete = (horario, horarioFormated) => {
@@ -146,24 +162,21 @@ export default function Agenda() {
         try {
           const clase = selectedClase;
           const horaActual = horario;
-          const horaSeleciconada = replaceHorario[index];
+          const horaSeleciconada = searchHorarioConverted[index];
           console.log(horaActual);
           console.log(horaSeleciconada);
-          const data = await fetch(
-            `https://zentra-pilates-production.up.railway.app/replace/${id}`,
-            {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-                "auth-token": localStorage.getItem("jwt"),
-              },
-              body: JSON.stringify({
-                clase: clase,
-                horaActual: horaActual,
-                horaSeleccionada: horaSeleciconada,
-              }),
-            }
-          );
+          const data = await fetch(`http://localhost:5000/replace/${id}`, {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+              "auth-token": localStorage.getItem("jwt"),
+            },
+            body: JSON.stringify({
+              clase: clase,
+              horaActual: horaActual,
+              horaSeleccionada: horaSeleciconada,
+            }),
+          });
           const dataJson = await data.json();
           console.log(dataJson);
 
@@ -185,7 +198,7 @@ export default function Agenda() {
       const selectedDate = horarioDelete;
       console.log(selectedHorario);
       const deleteDate = await fetch(
-        `https://zentra-pilates-production.up.railway.app/delete/${id}`,
+        `http://localhost:5000/delete/${id}`,
         {
           method: "POST",
           headers: {
@@ -226,11 +239,10 @@ export default function Agenda() {
                 <h2 className={styles.title}>Agenda de clases</h2>
               </div>
               <h3 className={styles.subtitle}>
-                Podrás ver tus proximas clases, re-agendarlas, o borrarlas
+                Podrás ver tus proximas clases y re-agendarlas.
               </h3>
               <p>
-                Selecciona el mes de la clase que quieres ver, re-agendar o
-                borrar:
+                Selecciona el mes de la clase que quieres ver o re-agendar
               </p>
               <Historial
                 onEdit={handleEdit}
@@ -238,6 +250,8 @@ export default function Agenda() {
                 showButtons={true}
                 showMesSelector={true}
                 inputShow="ninguno"
+                dataSocio={dataSocio}
+                
               />
             </div>
           </>
@@ -267,24 +281,25 @@ export default function Agenda() {
               />
             </div>
             {showResults ? (
-              <>
+              <div>
                 <div
                   className={`${showResults ? styles.container_search : ""}`}
                 >
                   <div className={styles.container_title}>
                     <h3>Resultados de la busqueda:</h3>
                   </div>
-                  {replaceHorario && replaceHorario.length === 0 ? (
+                  {searchHorarioConverted &&
+                  searchHorarioConverted.length === 0 ? (
                     <h3 className={styles.subtitle2}>
                       Ya tienes agenda para la clase y dia seleccionados
                     </h3>
                   ) : (
                     <div>
                       <ul>
-                        {searchHorarios.map((fecha, index) => (
+                        {searchHorarioOriginal.map((fecha, index) => (
                           <li key={index} className={styles.li}>
                             <input type="text" value={fecha} readOnly />
-                            {replaceHorario[index] && (
+                            {searchHorarioConverted[index] && (
                               <button
                                 className={styles.button}
                                 onClick={() => {
@@ -309,7 +324,7 @@ export default function Agenda() {
                     Cancelar
                   </button>
                 </div>
-              </>
+              </div>
             ) : (
               ""
             )}

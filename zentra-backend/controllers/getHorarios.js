@@ -14,11 +14,21 @@ const dateConvert = (dates) => {
     };
     const fechaObj = new Date(date);
 
-    fechaObj.setHours(fechaObj.getHours() + 3);
+    // fechaObj.setHours(fechaObj.getHours() + 3);
 
-    const fechaLocal = fechaObj.toLocaleString("es-ES", options);
+    // const fechaLocal = fechaObj.toLocaleString("es-ES", options);
 
-    return fechaLocal;
+    // return fechaLocal;
+
+    const year = fechaObj.getFullYear();
+    const month = String(fechaObj.getMonth() + 1).padStart(2, "0");
+    const day = String(fechaObj.getDate()).padStart(2, "0");
+    const hours = String(fechaObj.getHours()).padStart(2, "0");
+    const minutes = String(fechaObj.getMinutes()).padStart(2, "0");
+    const seconds = String(fechaObj.getSeconds()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return formattedDate;
   });
 };
 
@@ -27,15 +37,26 @@ const formatDate = (dates) => {
     const fechaObj = new Date(date);
     fechaObj.setUTCHours(fechaObj.getUTCHours() - 3);
 
+    const weekdays = [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ];
+    const dayOfWeek = weekdays[fechaObj.getUTCDay()];
+
     const year = fechaObj.getUTCFullYear();
     const month = String(fechaObj.getUTCMonth() + 1).padStart(2, "0");
     const day = String(fechaObj.getUTCDate()).padStart(2, "0");
     const hours = String(fechaObj.getUTCHours()).padStart(2, "0");
     const minutes = String(fechaObj.getUTCMinutes()).padStart(2, "0");
-    const seconds = String(fechaObj.getUTCSeconds()).padStart(2, "0");
-    const milliseconds = String(fechaObj.getUTCMilliseconds()).padStart(3, "0");
+    // const seconds = String(fechaObj.getUTCSeconds()).padStart(2, "0");
+    // const milliseconds = String(fechaObj.getUTCMilliseconds()).padStart(3, "0");
 
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+    const formattedDate = `${dayOfWeek}, ${day}/${month}/${year}, ${hours}:${minutes}`;
     return formattedDate;
   });
 };
@@ -150,13 +171,23 @@ const viewNextWeekHorarios = async (req, res, next) => {
       currentDate.getTime() + utcOffset * 60 * 60 * 1000
     );
 
-    const nextWeekStartDate = new Date(currentLocalDate);
-    const nextWeekEndDate = new Date(currentLocalDate);
+    // Calcular 7 dias para adelante para agendar
+    // const nextWeekStartDate = new Date(currentLocalDate);
+    // const nextWeekEndDate = new Date(currentLocalDate);
 
-    nextWeekEndDate.setDate(currentLocalDate.getDate() + 7);
+    // nextWeekEndDate.setDate(currentLocalDate.getDate() + 7);
+
+    // const formattedStartDate = currentLocalDate.toISOString().substr(0, 10);
+    // const formattedEndDate = nextWeekEndDate.toISOString().substr(0, 10);
+
+    // Calcula la fecha de inicio (hoy) y la fecha de fin (próximo sábado)
+    const nextSaturdayDate = new Date(currentLocalDate);
+    nextSaturdayDate.setDate(
+      currentLocalDate.getDate() + ((7 - currentLocalDate.getDay() + 1) % 7)
+    );
 
     const formattedStartDate = currentLocalDate.toISOString().substr(0, 10);
-    const formattedEndDate = nextWeekEndDate.toISOString().substr(0, 10);
+    const formattedEndDate = nextSaturdayDate.toISOString().substr(0, 10);
 
     const clasesDisponibles = await db.query(
       `SELECT *
@@ -178,12 +209,6 @@ const viewNextWeekHorarios = async (req, res, next) => {
       [id, clase, formattedStartDate, formattedEndDate]
     );
 
-    const timeZoneOffset = -3;
-    const horariosConvertidos = dateConvert(
-      clasesDisponibles.rows.map((row) => row.fecha),
-      timeZoneOffset
-    );
-
     const horariosOriginal = formatDate(
       clasesDisponibles.rows.map((row) => row.fecha)
     );
@@ -192,7 +217,6 @@ const viewNextWeekHorarios = async (req, res, next) => {
       success: true,
       data: {
         original: horariosOriginal,
-        converted: horariosConvertidos,
         nextWeekStartDate: formattedStartDate,
         nextWeekEndDate: formattedEndDate,
       },
@@ -206,7 +230,7 @@ const viewNextWeekHorarios = async (req, res, next) => {
   }
 };
 
-const agendaHora = async (req, res, next) => {
+const agendaHora = async (req, res) => {
   try {
     const { id } = req.params;
     const { fecha } = req.body;
@@ -277,6 +301,11 @@ const agendaHora = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error al agendar la clase",
+      error: error.message, // Puedes incluir detalles del error para depuración
+    });
   }
 };
 
@@ -411,10 +440,6 @@ const replaceHora = async (req, res, next) => {
       },
       message: "Horario reemplazado y actualizado",
     });
-
-    const response = await replaceHora(req, res);
-    res.status(200).json(response);
-    console.log(response);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -429,6 +454,15 @@ const deleteClase = async (req, res, next) => {
       `UPDATE horarios SET alumno1 = NULLIF(alumno1, $1),
       alumno2 = NULLIF(alumno2, $1),
       alumno3 = NULLIF(alumno3, $1)
+      alumno4 = NULLIF(alumno4, $1)
+      alumno5 = NULLIF(alumno5, $1)
+      alumno6 = NULLIF(alumno6, $1)
+      alumno7 = NULLIF(alumno7, $1)
+      alumno8 = NULLIF(alumno8, $1)
+      alumno9 = NULLIF(alumno9, $1)
+      alumno10 = NULLIF(alumno10, $1)
+      alumno11 = NULLIF(alumno11, $1)
+      alumno12 = NULLIF(alumno12, $1)
       WHERE fecha = $2`,
       [id, selectedDate]
     );

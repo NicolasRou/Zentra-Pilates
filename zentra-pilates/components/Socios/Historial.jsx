@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import DateSelector, { MesSelector } from "./DateSelector";
+import { DataSocioContext } from "@/contexts/dataSocio";
 import styles from "@/styles/Socios/Historial.module.css";
 
 export default function Historial({
@@ -9,6 +10,7 @@ export default function Historial({
   showButtons,
   showMesSelector,
   inputShow,
+  dataSocioPlan,
 }) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -18,32 +20,32 @@ export default function Historial({
   const router = useRouter();
   const { id } = router.query;
 
+  const { dataSocio } = useContext(DataSocioContext);
+
   const getHorarios = async (startDate, endDate) => {
     try {
-      const response = await fetch(
-        `https://zentra-pilates-production.up.railway.app/horarios/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            "auth-token": localStorage.getItem("jwt"),
-          },
-          body: JSON.stringify({
-            clientId: id,
-            startDate: startDate,
-            endDate: endDate,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:5000/horarios/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "auth-token": localStorage.getItem("jwt"),
+        },
+        body: JSON.stringify({
+          clientId: id,
+          startDate: startDate,
+          endDate: endDate,
+        }),
+      });
 
       const responseJson = await response.json();
       setData(responseJson.data);
+      console.log(data)
       if (responseJson.data.original.length < 1) {
         setHorarioFormated([]);
         setHorario([]);
       } else {
-        setHorarioFormated(responseJson.data.converted);
-        setHorario(responseJson.data.original);
+        setHorario(responseJson.data.converted);
+        setHorarioFormated(responseJson.data.original);
       }
     } catch (error) {
       console.log("error al obtener horarios");
@@ -94,13 +96,15 @@ export default function Historial({
                         >
                           Editar
                         </button>
-                        <button
-                          onClick={() =>
-                            onDelete(horario[index], horarioFormated[index])
-                          }
-                        >
-                          Borrar
-                        </button>
+                        {(dataSocio[0].plan.toLowerCase() === "cuponera") && (
+                          <button
+                            onClick={() =>
+                              onDelete(horario[index], horarioFormated[index])
+                            }
+                          >
+                            Borrar
+                          </button>
+                        )}
                       </>
                     )}
                   </li>

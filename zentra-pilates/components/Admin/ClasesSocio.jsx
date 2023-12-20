@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Loader from "../Socios/Loader";
+import styles from "@/styles/Admin/EditSocio.module.css";
 
 export default function ClasesSocio() {
   const [dataClase, setDataClase] = useState("");
+  const [clase, setClase] = useState("");
   const router = useRouter();
   const { id } = router.query;
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +27,8 @@ export default function ClasesSocio() {
         }
       );
       const responseJson = await response.json();
-      setDataClase(responseJson.data);
+      setDataClase(responseJson.data.horarios);
+      setClase(responseJson.data.clases);
       console.log(responseJson);
     } catch (error) {
       console.log("Error", error);
@@ -45,13 +48,22 @@ export default function ClasesSocio() {
   return (
     <section>
       {dataClase && dataClase.length > 0 ? (
-        <ul>
-          {dataClase.map((clase, index) => (
-            <li key={index}>
-              <p>{clase}</p>
-            </li>
-          ))}
-        </ul>
+        <div className={styles.horarios}>
+          <ul>
+            {dataClase.map((fecha, index) => (
+              <li key={index}>
+                <p>{fecha} - </p>
+              </li>
+            ))}
+          </ul>
+          <ul>
+            {clase.map((clase, index) => (
+              <li key={index}>
+                <p>{clase}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : (
         <p>No tiene clases agendadas</p>
       )}

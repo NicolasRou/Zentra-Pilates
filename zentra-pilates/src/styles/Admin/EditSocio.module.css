@@ -60,4 +60,6 @@
   border: 1px solid;
   transition: 0.7s;
 }
-
+.horarios {
+  display: flex;
+}
