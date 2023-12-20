@@ -7,29 +7,26 @@ export default function Planes() {
       <div className={styles.title}>
         <h2>
           ¡Tenemos planes adaptados a tus necesidades! <br /> Valor de la
-          inscripción por única vez $450
+          inscripción por única vez $490
         </h2>
       </div>
       <table className={styles.table}>
         <tbody>
           <tr className={styles.encabezados}>
             <th>
-              <h3>1 Vez por semana</h3>
-              <p>4 clases mensuales</p>
+              <h3>4 Clases mensuales</h3>
             </th>
             <th>
-              <h3>2 Veces por semana</h3>
-              <p>8 clases mensuales</p>
+              <h3>8 Clases mensuales</h3>
             </th>
             <th>
-              <h3>3 Veces por semana</h3>
-              <p>12 clases mensuales</p>
+              <h3>12 Clases mensuales</h3>
             </th>
           </tr>
           <tr className={styles.precios}>
-            <td>$1380</td>
-            <td>$2190</td>
-            <td>$2750</td>
+            <td>$1490</td>
+            <td>$2390</td>
+            <td>$2990</td>
           </tr>
           <tr>
             <td className={styles.td}>
@@ -39,9 +36,8 @@ export default function Planes() {
               <p>Pilates funcional</p>
               <p>Pilates TRX</p>
               <p>Stretching</p>
-              <p>Yoga</p>
               <div className={styles.container__link}>
-                <Link href="/#contacta" className={styles.link}>
+                <Link href="/inscripcion" className={styles.link}>
                   INSCRIBIRME
                 </Link>
               </div>
@@ -53,9 +49,8 @@ export default function Planes() {
               <p>Pilates funcional</p>
               <p>Pilates TRX</p>
               <p>Stretching</p>
-              <p>Yoga</p>
               <div className={styles.container__link}>
-                <Link href="/#contacta" className={styles.link}>
+                <Link href="/inscripcion" className={styles.link}>
                   INSCRIBIRME
                 </Link>
               </div>
@@ -67,9 +62,8 @@ export default function Planes() {
               <p>Pilates funcional</p>
               <p>Pilates TRX</p>
               <p>Stretching</p>
-              <p>Yoga</p>
               <div className={styles.container__link}>
-                <Link href="/#contacta" className={styles.link}>
+                <Link href="/inscripcion" className={styles.link}>
                   INSCRIBIRME
                 </Link>
               </div>
