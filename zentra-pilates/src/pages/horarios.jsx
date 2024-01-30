@@ -102,22 +102,31 @@ export default function Horarios() {
                 </tr>
               </thead>
               <tbody>
+              <td className={styles.hora}>08:30</td>
+                  <td>-</td>
+                  <td>Pilates</td>
+                  <td>-</td>
+                  <td>Pilates + Stretching</td>
+                  <td>-</td>
+                  <td>
+                    <p>Pilates</p>
+                  </td>
                 <tr>
                   <td className={styles.hora}>09:00</td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates</p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>-</td>
                 </tr>
@@ -129,7 +138,7 @@ export default function Horarios() {
                   <td>-</td>
                   <td>-</td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                 </tr>
                 <tr>
@@ -146,76 +155,76 @@ export default function Horarios() {
                 <tr>
                   <td className={styles.hora}>17:00</td>
                   <td>
-                    <p>TRX presencial</p>
+                    <p>TRX </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial + Stretching pres.</p>
+                    <p>Pilates  + Stretching </p>
                   </td>
                   <td>-</td>
                 </tr>
                 <tr>
                   <td className={styles.hora}>18:30</td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial + TRX pres.</p>
+                    <p>Pilates  + TRX </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>-</td>
                 </tr>
                 <tr>
                   <td className={styles.hora}>19:45</td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Funcional + Stretching pres.</p>
+                    <p>Funcional + Stretching </p>
                   </td>
                   <td>
-                    <p>TRX + Pilates presencial</p>
+                    <p>TRX + Pilates </p>
                   </td>
                   <td>
-                    <p>TRX + Pilates presencial</p>
+                    <p>TRX + Pilates </p>
                   </td>
                   <td>-</td>
                 </tr>
                 <tr>
                   <td className={styles.hora}>20:45</td>
                   <td>
-                    <p>Pilates funcional presencial</p>
+                    <p>Pilates funcional </p>
                   </td>
                   <td>
-                    <p>Stretching presencial</p>
+                    <p>Stretching </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>Pilates presencial</p>
+                    <p>Pilates </p>
                   </td>
                   <td>
-                    <p>TRX + Pilates presencial</p>
+                    <p>TRX + Pilates </p>
                   </td>
                   <td>-</td>
                 </tr>
